@@ -12,8 +12,8 @@ package (ADR-001).
 
 | Phase | Scope | Status |
 |---|---|---|
-| P0 | Scaffold: dual entry, config loader, core interfaces | not started |
-| P1 | ObservationPack v1 + pure-logic tests | not started |
+| P0 | Scaffold: dual entry, config loader, core interfaces | done |
+| P1 | ObservationPack v1 + pure-logic tests | code+tests done; runtime spike pending |
 | P2 | Action Fusion v1 + tests | not started |
 | P3 | Online Context Compact v1 | not started |
 | P4 | Evidence-Preserving Reducer v1 | not started |
