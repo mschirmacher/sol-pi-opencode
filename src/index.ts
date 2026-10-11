@@ -1,12 +1,40 @@
 import { Plugin as V2Plugin } from "@opencode/plugin";
 import type { Hooks, Plugin as V1Plugin, PluginInput, PluginOptions } from "@opencode-ai/plugin";
 import { loadConfig } from "./core/config.js";
+import { createActionFusionHooks } from "./v1/action-fusion.js";
 import { createObservationPackHooks } from "./v1/observation-pack.js";
+
+/** Compose two hook objects; shared hooks run in order (a before b). */
+function mergeHooks(a: Hooks, b: Hooks): Hooks {
+  const out: Record<string, unknown> = { ...a };
+  for (const [key, value] of Object.entries(b)) {
+    const prev = out[key];
+    if (typeof prev === "function" && typeof value === "function") {
+      const first = prev as (...args: unknown[]) => Promise<void>;
+      const second = value as (...args: unknown[]) => Promise<void>;
+      out[key] = async (...args: unknown[]) => {
+        await first(...args);
+        await second(...args);
+      };
+    } else if (
+      prev && value &&
+      typeof prev === "object" && !Array.isArray(prev) &&
+      typeof value === "object" && !Array.isArray(value)
+    ) {
+      out[key] = { ...prev, ...value };
+    } else if (value !== undefined) {
+      out[key] = value;
+    }
+  }
+  return out as Hooks;
+}
 
 /** V1 object-entrypoint server (opencode-ai >= 1.18.29). */
 export async function server(input: PluginInput, options?: PluginOptions): Promise<Hooks> {
   const config = await loadConfig(input.directory);
-  return createObservationPackHooks(input, config.observationPack);
+  let hooks = createActionFusionHooks(input, config.actionFusion);
+  hooks = mergeHooks(hooks, createObservationPackHooks(input, config.observationPack));
+  return hooks;
 }
 
 /** Legacy function entry for opencode-ai < 1.18.29. */

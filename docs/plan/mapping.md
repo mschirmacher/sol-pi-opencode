@@ -288,3 +288,22 @@ cache breakpoints are computed — assume yes (it is pre-request), verify at P1.
 - **Exact local archives** for every reduction → recall/verification is lossless.
 - **Deterministic verification** (byte-exact quotes, sha256 guards, per-file
   queues) — safety checks are string matching, not another LLM.
+
+## Addendum — spike findings (2026-10-11)
+
+Source-level facts from `docs/research/opencode-v1-internals.md` (v1.19.0):
+
+1. **ObservationPack archive exactness:** opencode pre-truncates tool output at
+   2000 lines / 50 KB *before* `tool.execute.after` fires (Q2), so the archive
+   is exact with respect to the post-truncation observation the model receives;
+   bytes beyond the ceiling exist only in opencode's own truncation file
+   (`metadata.outputPath`).
+2. **Action Fusion validated:** the after-hook's rewritten `output.output` is
+   both what the model sees and what gets persisted (Q3/Q5) — the fused
+   single-observation design works as sketched. Consequence: ObservationPack
+   must stay **projection-only** (rewrite only `messages.transform` copies);
+   after-hook rewrites already reach storage.
+3. **OCC continuation:** `client.session.summarize` does not abort — it inserts
+   a compaction part and continues the loop with a synthetic "Continue…" user
+   message (`experimental.compaction.autocontinue`, default on) (Q4). No
+   Pi-style save-state/abort/`agent_settled` dance needed in 1.x.

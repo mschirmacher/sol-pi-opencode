@@ -13,6 +13,12 @@ export interface FeatureConfig {
   enabled: boolean;
 }
 
+export interface ActionFusionConfig extends FeatureConfig {
+  commandTimeoutMs: number;
+  /** Regex source strings; when non-empty, fused commands must match one. */
+  allowList: string[];
+}
+
 export interface ReducerConfig extends FeatureConfig {
   provider?: string;
   model?: string;
@@ -20,7 +26,7 @@ export interface ReducerConfig extends FeatureConfig {
 
 export interface SolPiConfig {
   observationPack: ObservationPackConfig;
-  actionFusion: FeatureConfig;
+  actionFusion: ActionFusionConfig;
   onlineContextCompact: FeatureConfig;
   evidencePreservingReducer: ReducerConfig;
   cacheWriteReadRatio: number;
@@ -33,7 +39,7 @@ export const DEFAULT_CONFIG: SolPiConfig = {
     fullSends: 2,
     excerptBytes: 1024,
   },
-  actionFusion: { enabled: false },
+  actionFusion: { enabled: false, commandTimeoutMs: 60_000, allowList: [] },
   onlineContextCompact: { enabled: false },
   evidencePreservingReducer: { enabled: false },
   cacheWriteReadRatio: 12.5,
@@ -88,6 +94,15 @@ function normalizeConfig(raw: unknown): SolPiConfig {
     const feature = r[key];
     if (typeof feature === "object" && feature !== null) {
       out[key].enabled = (feature as Record<string, unknown>).enabled === true;
+    }
+  }
+
+  const fusion = r.actionFusion;
+  if (typeof fusion === "object" && fusion !== null) {
+    const f = fusion as Record<string, unknown>;
+    out.actionFusion.commandTimeoutMs = positiveInt(f.commandTimeoutMs, out.actionFusion.commandTimeoutMs);
+    if (Array.isArray(f.allowList)) {
+      out.actionFusion.allowList = f.allowList.filter((item): item is string => typeof item === "string");
     }
   }
 
