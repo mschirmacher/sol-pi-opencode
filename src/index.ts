@@ -5,6 +5,10 @@ import { createActionFusionHooks } from "./v1/action-fusion.js";
 import { createObservationPackHooks } from "./v1/observation-pack.js";
 import { createOnlineContextCompactHooks } from "./v1/online-context-compact.js";
 import { createEvidencePreservingReducerHooks } from "./v1/evidence-preserving-reducer.js";
+import { registerObservationPack } from "./v2/observation-pack.js";
+import { registerActionFusion } from "./v2/action-fusion.js";
+import { registerOnlineContextCompact } from "./v2/online-context-compact.js";
+import { registerEvidencePreservingReducer } from "./v2/reducer.js";
 
 /** Compose two hook objects; shared hooks run in order (a before b). */
 function mergeHooks(a: Hooks, b: Hooks): Hooks {
@@ -62,12 +66,23 @@ export default {
   ...V2Plugin.define({
     id: "sol-pi-opencode",
     async setup(ctx) {
-      // TODO(P5): v2 adapter — register ObservationPack via
-      // ctx.tool.hook("execute.after") (archive), ctx.session.hook("context")
-      // (projection), ctx.tool.transform (sol_pi_recall), ctx.storage (ledger).
-      // Config is already read here so P5 only adds registrations.
-      const directory = (ctx as { location?: { directory?: string } }).location?.directory ?? process.cwd();
-      await loadConfig(directory);
+      const config = await loadConfig(ctx.location.directory);
+      const cleanups: Array<() => Promise<void> | void> = [];
+      if (config.observationPack.enabled) {
+        cleanups.push(await registerObservationPack(ctx, config.observationPack));
+      }
+      if (config.actionFusion.enabled) {
+        cleanups.push(await registerActionFusion(ctx, config.actionFusion));
+      }
+      if (config.onlineContextCompact.enabled) {
+        cleanups.push(await registerOnlineContextCompact(ctx, config.onlineContextCompact));
+      }
+      if (config.evidencePreservingReducer.enabled) {
+        cleanups.push(await registerEvidencePreservingReducer(ctx, config.evidencePreservingReducer));
+      }
+      return async () => {
+        for (const cleanup of cleanups) await cleanup();
+      };
     },
   }),
   server,
