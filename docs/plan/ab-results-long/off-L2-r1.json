@@ -1,0 +1,18 @@
+{
+  "arm": "off",
+  "task": "L2",
+  "run": 1,
+  "tasksDir": "tasks-long",
+  "title": "build-log forensics: 3 planted root causes (long)",
+  "opencodeExit": -1,
+  "timedOut": true,
+  "verifierScore": 0,
+  "verifierScorePartial": 0,
+  "durationMs": 906135,
+  "verifierOut": "SCORE 0/3\n",
+  "verifierErr": "",
+  "runOut": "",
+  "runErr": "",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L2-r1/.data/opencode/opencode.db",
+  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L2-r1/.cache"
+}
