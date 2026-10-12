@@ -1,0 +1,18 @@
+{
+  "arm": "off",
+  "task": "L1",
+  "run": 2,
+  "tasksDir": "tasks-long",
+  "title": "fix 12 failing tests across 4 modules (long)",
+  "opencodeExit": -1,
+  "timedOut": true,
+  "verifierScore": 0,
+  "verifierScorePartial": 0,
+  "durationMs": 1020384,
+  "verifierOut": "",
+  "verifierErr": "",
+  "runOut": "pi-opencode/.ab/off/L1-r2/src/cart.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/off/L1-r2/src/cart.js\n@@ -1,4 +1,4 @@\n export function addItem(cart, item) { const hit = cart.find((x) => x.sku === item.sku); if (hit) hit.qty += item.qty; else cart.push({ ...item }); return cart; }\n export function removeItem(cart, sku) { return cart.filter((x) => x.sku !== sku); }\n-export function totalPrice(cart, taxPct) { const sub = cart.reduce((a, x) => a + x.price * x.qty * (x.qty > 2 ? 0.9 : 1), 0); return sub + (sub * taxPct) / 100; }\n+export function totalPrice(cart, taxPct) { const sub = cart.reduce((a, x) => a + x.price * x.qty, 0); return sub + (sub * taxPct) / 100; }\n export function countItems(cart) { return cart.reduce((a, x) => a + x.qty, 0) - (cart.length > 1 ? 1 : 0); }\n\n\u001b[0m\n\u001b[0m→ \u001b[0mRead .data/opencode/tool-output/tool_12f71fd44001XG2K37s61pbjHD\u001b[90m [limit=240]\u001b[0m\n\u001b[0m→ \u001b[0mRead .data/opencode/tool-output/tool_12f71fd44001XG2K37s61pbjHD\u001b[90m [limit=200, offset=225]\u001b[0m\n",
+  "runErr": "",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L1-r2/.data/opencode/opencode.db",
+  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L1-r2/.cache"
+}
