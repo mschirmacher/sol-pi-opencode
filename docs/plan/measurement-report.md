@@ -115,30 +115,100 @@ gentle-forest       12   20    0   0.0   0.0     3     51,480   0
    Re-run the command above to refresh; `measurement-baseline.json` is the
    machine-readable snapshot of the numbers quoted here.
 
-## E2E — plugin load + mechanism smoke (placeholder)
+## E2E — plugin load + mechanism smoke (P6b, all PASS)
 
-_Filled by P6b: `opencode serve` plugin-load smoke, then mock OpenAI-compatible
-provider (`@ai-sdk/openai-compatible`, `baseURL: http://localhost:8787/v1`) driving
-scripted sessions with mechanisms ON. Expected: hook registration log lines,
-per-mechanism firing counts, archive files under the local archive dir._
+Real `opencode` 1.19.0 binary + local OpenAI-compatible mock provider
+(`baseURL: http://127.0.0.1:8787/v1`), scripted sessions, mechanisms ON.
+Full details + pitfalls: `docs/plan/spike-p6-e2e.md`. No plugin bugs — `src/` untouched.
 
 | Check | Result |
 |---|---|
-| plugin loads (1.x object entry) | _pending_ |
-| ObservationPack archives >10 KiB outputs | _pending_ |
-| Action Fusion strips `thenRun` | _pending_ |
-| OCC fires on todo boundary | _pending_ |
-| Reducer receipt emitted | _pending_ |
+| plugin loads (1.x object entry) | **PASS** — shim `.opencode/plugins/sol-pi.ts` re-exports `src/index.ts`; `default.server` picked up; `sol_pi_recall` in every main-request tool schema (`eb48911`) |
+| ObservationPack archives >10 KiB outputs | **PASS** — S1: 30 KB output archived; exactly 2 full sends, later requests carry placeholder + `obs_…` handle; stored history untouched (`1fecc3d`) |
+| Action Fusion strips `thenRun` | **PASS** — S2: `thenRun` in model-facing edit schema, stripped before execution, single combined observation `[then_run:succeeded]` (`9b8a4e9`) |
+| OCC fires on todo boundary | **PASS** — S4: `todo.updated` boundary → `session.idle` economics → `client.session.summarize`; `time_compacting` set (`e5b21dc`) |
+| Reducer receipt emitted | **PASS** — S3: ≥minLogBytes log archived, real reducer model call, `sol_pi_evidence_receipt_v1` marker, journal `applied` (`92c849d`) |
 
-## A/B — mechanisms ON vs OFF (placeholder)
+## A/B — mechanisms ON vs OFF (P6c)
 
-_Filled by P6c: paired runs, same model, list prices, ≥5 long sessions; report
-bill + tokens + response counts per arm and per mechanism, then go/no-go per
-mechanism for the default-on discussion._
+Harness `scripts/ab/run-arm.mjs` + `scripts/ab/collect.mjs`; results in
+`docs/plan/ab-results/` + machine-readable `docs/plan/ab-results.json`.
+Arms: `off` (all mechanisms disabled) vs `on` (all four enabled) vs `op-only`
+(ObservationPack only). Plugin shim loaded in ALL arms — only `sol-pi.json` differs.
+Same model both arms (`devbox-ai/qwen3.8-flash-next-iq3_xxs`), proxy is token-metered
+with **cost = 0 → token-only, no bill figures**. 5 small tasks (T1 fix tests,
+T2 add function, T3 debug 30 KB build log, T4 multi-file refactor, T5 flaky test),
+1 run per arm per task. Tokens = billed input + cacheRead + output from each run's
+own SQLite DB via `measure.mjs::analyzeDatabase`.
 
-| Mechanism | Δ bill | Δ tokens | Δ responses | SoL-Pi reference | Go/No-go |
-|---|---|---|---|---|---|
-| ObservationPack | _pending_ | _pending_ | _pending_ | −23.58% bill | _pending_ |
-| Action Fusion | _pending_ | _pending_ | _pending_ | 28.3%→100% trigger | _pending_ |
-| OCC | _pending_ | _pending_ | _pending_ | — | _pending_ |
-| Reducer | _pending_ | _pending_ | _pending_ | — | _pending_ |
+### Paired per-task table (off vs on)
+
+| Task | tok off (in/cacheR/out) | tok on (in/cacheR/out) | Δ tok | turns off→on | tool calls off→on | score off/on |
+|---|---|---|---|---|---|---|
+| T1 fix 2 failing tests | 41,043 (8,212/32,417/414) | 41,829 (8,386/33,032/411) | **+1.9%** | 5→5 | 5→5 | 1/1 |
+| T2 add function + tests | 40,453 (8,057/31,986/410) | 52,997 (8,694/43,606/697) | **+31.0%** | 5→6 | 5→6 | 1/1 |
+| T3 debug 30 KB build log | 49,335 (8,106/40,646/583) | 56,171 (9,822/45,625/724) | **+13.9%** | 6→6 | 5→7 | 1/1 |
+| T4 multi-file refactor | 52,198 (8,415/42,588/1,195) | 64,617 (8,918/54,631/1,068) | **+23.8%** | 6→7 | 9→9 | 1/1 |
+| T5 fix flaky test | 52,564 (8,243/43,063/1,258) | 45,575 (8,627/35,713/1,235) | **−13.3%** | 6→5 | 7→6 | 1/1 |
+| **TOTAL** | **235,593** (41,033/190,700/3,860) | **261,189** (44,447/212,607/4,135) | **+10.9%** | 28→29 | 31→33 | **5/5 both** |
+
+Headline: **ON is +10.9% tokens vs OFF** with identical verifier score (5/5).
+Per-task deltas swing from −13.3% to +31.0% — sign flips across tasks, i.e.
+dominated by model run-to-run variance, not by a consistent mechanism effect.
+
+### op-only arm (ObservationPack attribution)
+
+| Task | tok op-only | vs off | note |
+|---|---|---|---|
+| T1 | 33,551 (4 turns) | −18.3% | within noise; no ≥10 KiB output to archive |
+| T2 | 41,731 (5 turns) | +3.2% | same |
+| T3 | — | — | **timed out** (exit −1, 309 s > 300 s cap) |
+| T4, T5 | — | — | not run (skipped: see limitations) |
+
+**Critical fact: `replayTokens = 0` in all 15 runs, all arms.** No tool output
+≥ 10 240 B was replayed beyond the 2 kept sends in any A/B task — ObservationPack
+never had a firing opportunity (T3's 30 KB log is a committed *file* the agent
+greps/tails, not a tool output). The op-only arm therefore cannot attribute any
+saving; its spread (−18.3% / +3.2%) is pure model noise.
+
+### Comparison vs SoL-Pi (−44.7–49.0% tokens)
+
+SoL-Pi's headline is EdgeBench coding tasks (51 tasks, GPT-5.6 Sol / Opus 5,
+`xhigh`); ObservationPack alone measured −23.58% bill on 11 paired long tasks.
+Our +10.9% diverges because: (1) **tasks are tiny** — 5–7 turns, 40–65 k tokens
+each, vs SoL-Pi's long sessions; the mechanisms' payoff scales with session
+length and large repeated tool outputs, and replayTokens=0 means the single
+biggest lever (ObservationPack) did nothing here; (2) **small local model** —
+variance between two runs of the same task (T2 +31%, T5 −13%) dwarfs any
+mechanism effect at n=1 per cell; (3) **orchestration-flavored tasks** — the
+baseline already showed edit→bash loops are under-represented (26.6% vs 85.1%),
+so Action Fusion's trigger surface is thin; (4) cost=0 proxy → no bill column.
+This A/B **fails to reproduce** SoL-Pi's savings and equally fails to show harm
+beyond noise; it is underpowered, not falsifying.
+
+### Per-mechanism GO/NO-GO (default-on discussion)
+
+| Mechanism | Evidence in this A/B | SoL-Pi reference | Verdict |
+|---|---|---|---|
+| ObservationPack | E2E S1 proves it fires correctly; baseline shows 11.1% replay headroom on real long sessions; but A/B: 0 firing opportunities in 15 runs, op-only arm within noise | −23.58% bill (11 paired long tasks) | **NO-GO for default-on** — keep opt-in; needs a long-session A/B suite with ≥10 KiB repeated tool outputs before any default-on claim |
+| Action Fusion | E2E S2 proves schema swap + combined observation; A/B: no turn collapse observed (on-arm turns 28→29, tool calls 31→33); baseline headroom narrow (bash 26.6% of post-edit next-actions) | 28.3%→100% trigger, 12.3% eligible | **NO-GO** — no measured benefit at this task shape; revisit with edit→test-loop tasks |
+| OCC | E2E S4 fires only with contrived `limit.context=8000`; baseline: 0 compactions in 16 real sessions; A/B sessions peak ≈55 k tok against a 262 k window → trigger never reachable | — | **NO-GO** — zero headroom in any measured workload; keep opt-in |
+| Reducer | E2E S3 proves receipt pipeline end-to-end; A/B: no tool output ≥ minLogBytes=4096 to reduce (T3 log is a file, not a tool output); on-arm shows overhead (T3 +2 tool calls) without savings | — | **NO-GO** — unexercised by these tasks; keep opt-in |
+
+Overall: **all four mechanisms stay default-off.** The plugin is functionally
+validated (E2E 4/4 PASS, unit 78/78) but token-effective value is unproven at
+this task scale; the honest next step is a long-session A/B suite (≥100 k tok
+sessions, repeated ≥10 KiB outputs, edit→test loops), not a default-on flip.
+
+### A/B limitations (explicit)
+
+1. n=5 tasks, **1 run per arm per task** — no repeat runs, noise unquantified;
+   per-task Δ sign flips.
+2. Single small model (`qwen3.8-flash-next-iq3_xxs`) via cost=0 proxy — no bill
+   figures, no cross-model generalization.
+3. Tasks are short (5–7 turns) — below the regime where ObservationPack/OCC pay off.
+4. op-only arm incomplete: T3 timed out (309 s), T4/T5 not run — skipped
+   deliberately: with replayTokens=0 everywhere, further op-only runs add no
+   attribution value.
+5. No per-mechanism firing counters captured per run (only DB-derived
+   replayTokens=0); attribution relies on config diff between arms.

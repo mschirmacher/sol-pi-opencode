@@ -17,22 +17,20 @@ opencode plugin porting SoL-Pi's 4 token-efficiency mechanisms; 1.x priority,
 | P3 | Online Context Compact v1 | done (code+tests); runtime E2E needs real opencode + API key |
 | P4 | Evidence-Preserving Reducer v1 | done (code+tests); runtime E2E needs real opencode + API key |
 | P5 | v2 adapters for shipped mechanisms | done (code+tests, @opencode/plugin 2.0.26 types; runtime E2E needs real opencode 2.x) |
-| P6 | Measurement / validation | in_progress (miner + baseline done; E2E + A/B pending) |
+| P6 | Measurement / validation | done (baseline + E2E 4/4 PASS + A/B: 10 paired + 3 op-only runs, cost-0 proxy; all mechanisms stay default-off) |
 
 ## Key facts
 
 - SoL-Pi mechanisms/constants/numbers: `docs/research/sol-pi.md` (10 KiB threshold,
   2 full sends, sha256 guard, cacheWriteReadRatio 12.5, ObservationPack −23.58% bill).
-- P6 baseline (`scripts/measure.mjs`, 16 orchestration sessions, cost=0 → tokens
-  only): adjacency 26.4% of edit parts / 10.2% of cross-turn transitions, bash
-  26.6% of next-actions; ObservationPack replay ≈1.95M tok (11.1% of billed); OCC
-  compaction 0. Numbers + caveats: `docs/plan/measurement-report.md`.
-- 1.x/2.x hook surface + breaking changes + dual-entry:
-  `docs/research/opencode-extensions.md` (V1 object entrypoint needs opencode-ai
-  ≥ 1.18.29). Repo decision: `docs/plan/adr-001-repo-structure.md`; per-mechanism
-  mapping + questions (a)–(d): `docs/plan/mapping.md`; phases: `docs/plan/roadmap.md`.
-- P2 verified against v1.19.0 source: built-in arg decode strips excess keys;
-  after-hook output rewrite reaches model AND storage. Addendum: mapping.md.
+- P6 baseline (`scripts/measure.mjs`, 16 orchestration sessions, cost=0 → tokens only): adjacency 26.4% / eligible 10.2%, bash 26.6% post-edit; ObservationPack replay ≈1.95M tok (11.1% of billed); OCC compaction 0 — `docs/plan/measurement-report.md`.
+- P6b E2E: all 4 mechanisms fire end-to-end on real opencode 1.19.0 + mock provider; no plugin bugs (`docs/plan/spike-p6-e2e.md`).
+- P6c A/B (`scripts/ab/`, results in `docs/plan/ab-results/`): 5 small tasks ×
+  off/on (+3 op-only, 1 timeout): ON = +10.9% tokens vs OFF, score 5/5 both,
+  replayTokens=0 everywhere → no mechanism fired; SoL-Pi −44.7–49.0% NOT
+  reproduced at this scale; all mechanisms NO-GO for default-on.
+- 1.x/2.x hook surface + breaking changes + dual-entry: `docs/research/opencode-extensions.md` (V1 object entrypoint needs opencode-ai ≥ 1.18.29). Repo decision: `docs/plan/adr-001-repo-structure.md`; per-mechanism mapping + questions (a)–(d): `docs/plan/mapping.md`; phases: `docs/plan/roadmap.md`.
+- P2 verified against v1.19.0 source: built-in arg decode strips excess keys; after-hook output rewrite reaches model AND storage (mapping.md addendum).
 - P3 boundary signal: 1.x `todo.updated` events (built-in todo tool) are the
   completed-step signal; `session.idle` is only the quiescent firing point.
   1.x compaction trigger = SDK `client.session.summarize`; archives under
