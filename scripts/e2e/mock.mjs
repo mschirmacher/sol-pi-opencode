@@ -4,6 +4,9 @@
 import { createServer } from "node:http";
 import { appendFileSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { dirname, resolve as resolvePath } from "node:path";
+
+const SCRIPT_DIR = dirname(process.env.MOCK_SCRIPT);
 
 const PORT = Number(process.env.MOCK_PORT || 8787);
 const LOG = process.env.MOCK_LOG;
@@ -17,7 +20,7 @@ function sha256(s) {
 }
 
 function buildReceipt(entry) {
-  const file = readFileSync(entry.receipt.file);
+  const file = readFileSync(resolvePath(SCRIPT_DIR, entry.receipt.file));
   const body = (entry.receipt.prefix || "") + file.toString("utf8");
   const evidence = entry.receipt.quotes.map((q) => ({ kind: q.kind || "summary", quote: q.quote }));
   return JSON.stringify({
@@ -83,6 +86,7 @@ const server = createServer((req, res) => {
     let raw = "";
     req.on("data", (c) => (raw += c));
     req.on("end", () => {
+      try {
       n += 1;
       const body = JSON.parse(raw);
       if (LOG) appendFileSync(LOG, JSON.stringify({ n, at: Date.now(), body }) + "\n");
@@ -100,6 +104,11 @@ const server = createServer((req, res) => {
           choices: [{ index: 0, message: { role: "assistant", content, ...(entry.tool_calls?.length ? { tool_calls: entry.tool_calls.map((c, i) => ({ id: `call_mock_${n}_${i}`, type: "function", function: { name: c.name, arguments: JSON.stringify(c.arguments ?? {}) } })) } : {}) }, finish_reason: entry.tool_calls?.length ? "tool_calls" : entry.finish || "stop" }],
           usage: entry.usage || { prompt_tokens: 100, completion_tokens: 20 },
         }));
+      }
+      } catch (err) {
+        console.error("mock handler error:", err && err.stack || err);
+        if (!res.headersSent) res.writeHead(500, { "content-type": "application/json" });
+        res.end(JSON.stringify({ error: { message: String(err) } }));
       }
     });
     return;
