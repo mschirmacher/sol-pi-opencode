@@ -149,7 +149,7 @@ const SCENARIOS = {
       expect(ctx.code === 0, `opencode run exited with ${ctx.code}: ${ctx.stderr.slice(-400)}`);
       const occ = findFiles(join(ctx.cacheSolPi, "_occ"), "");
       expect(occ.length >= 1, "no OCC state file (events never fired)");
-      const compacted = dbQuery(ctx.db, "SELECT time_compacted FROM session");
+      const compacted = dbQuery(ctx.db, "SELECT time_compacting FROM session");
       const compactionParts = dbQuery(ctx.db, "SELECT data FROM part").filter((d) => d.includes('"type":"compaction"'));
       expect(compacted.some((t) => t !== null) || compactionParts.length > 0, "no compaction observed (time_compacted null, no compaction part)");
     },
