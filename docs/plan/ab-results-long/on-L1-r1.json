@@ -1,0 +1,18 @@
+{
+  "arm": "on",
+  "task": "L1",
+  "run": 1,
+  "tasksDir": "tasks-long",
+  "title": "fix 12 failing tests across 4 modules (long)",
+  "opencodeExit": -1,
+  "timedOut": true,
+  "verifierScore": 0,
+  "verifierScorePartial": 0.75,
+  "durationMs": 902652,
+  "verifierOut": "# tests 48\n# pass 36\n# fail 12\nSCORE 36/48\n",
+  "verifierErr": "",
+  "runOut": "",
+  "runErr": "",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/L1-r1/.data/opencode/opencode.db",
+  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/L1-r1/.cache"
+}
