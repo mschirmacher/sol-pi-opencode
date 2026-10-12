@@ -1,0 +1,14 @@
+{
+  "arm": "off",
+  "task": "T2",
+  "title": "add a function + tests",
+  "opencodeExit": 0,
+  "timedOut": false,
+  "verifierScore": 1,
+  "durationMs": 29123,
+  "verifierOut": "TAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 0.85807\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 132.381367\n",
+  "verifierErr": "",
+  "runOut": "Done. `shout` now returns `s.toUpperCase() + \"!\"`; `node --test` passes (1/1).\n",
+  "runErr": "12 09:48 .data\ndrwxr-xr-x 7 agent agent 4096 Oct 12 09:48 .git\ndrwxr-xr-x 4 agent agent 4096 Oct 12 09:48 .opencode\n-rw-r--r-- 1 agent agent  582 Oct 12 09:48 opencode.json\n-rw-r--r-- 1 agent agent   80 Oct 12 09:48 str.js\n-rw-r--r-- 1 agent agent  163 Oct 12 09:48 str.test.mjs\n\u001b[0m\n\u001b[0m→ \u001b[0mRead str.js\n\u001b[0m→ \u001b[0mRead str.test.mjs\n\u001b[0m\n\u001b[0m← \u001b[0mEdit str.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/str.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/str.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/str.js\n@@ -1,3 +1,3 @@\n export function shout(s) {\n-  // TODO: return s uppercased with a trailing \"!\"\n+  return s.toUpperCase() + \"!\";\n }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test\nTAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 0.93103\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 136.131921\n\u001b[0m\n",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/.data/opencode/opencode.db"
+}

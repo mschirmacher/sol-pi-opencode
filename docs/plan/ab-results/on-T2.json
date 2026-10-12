@@ -1,0 +1,14 @@
+{
+  "arm": "on",
+  "task": "T2",
+  "title": "add a function + tests",
+  "opencodeExit": 0,
+  "timedOut": false,
+  "verifierScore": 1,
+  "durationMs": 46375,
+  "verifierOut": "TAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 0.997078\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 142.147121\n",
+  "verifierErr": "",
+  "runOut": "Done — `str.js:2` now returns `s.toUpperCase() + \"!\"`; `node --test` passes (1/1).\n",
+  "runErr": ":///home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.test.mjs:4:28)\n    Test.runInAsyncScope (node:async_hooks:214:14)\n    Test.run (node:internal/test_runner/test:1047:25)\n    Test.start (node:internal/test_runner/test:944:17)\n    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 150.753039\n\u001b[0m\n\u001b[0m← \u001b[0mEdit str.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.js\n@@ -1,3 +1,3 @@\n export function shout(s) {\n-  // TODO: return s uppercased with a trailing \"!\"\n+  return s.toUpperCase() + \"!\";\n }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test 2>&1 | tail -8\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 128.909711\n\u001b[0m\n",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/.data/opencode/opencode.db"
+}

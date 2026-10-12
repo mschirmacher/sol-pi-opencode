@@ -1,0 +1,14 @@
+{
+  "arm": "on",
+  "task": "T5",
+  "title": "investigate a noisy test-run log and fix the flaky test",
+  "opencodeExit": 0,
+  "timedOut": false,
+  "verifierScore": 1,
+  "durationMs": 45062,
+  "verifierOut": "TAP version 13\n# Subtest: flaky\nok 1 - flaky\n  ---\n  duration_ms: 0.896471\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 122.555772\nTAP version 13\n# Subtest: flaky\nok 1 - flaky\n  ---\n  duration_ms: 0.845823\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 121.397142\n",
+  "verifierErr": "",
+  "runOut": "The test uses `Math.random()` — inherently non-deterministic. I'll replace it with a seeded PRNG so the value is fixed across runs.\nReplaced `Math.random()` with a fixed-seed LCG (yields 0.514 every run). Verified: 20 consecutive `node --test` runs, 0 failures.\n",
+  "runErr": "m✱ \u001b[0mGlob \"**/flaky*\"\u001b[90m 2 matches\u001b[0m\n\u001b[0m→ \u001b[0mRead flaky.test.mjs\n\u001b[0m→ \u001b[0mRead flaky.log\n\u001b[0m\n\u001b[0m← \u001b[0mEdit flaky.test.mjs\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/flaky.test.mjs\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/flaky.test.mjs\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/flaky.test.mjs\n@@ -1,6 +1,8 @@\n import { test } from \"node:test\";\n import assert from \"node:assert\";\n test(\"flaky\", () => {\n-  const jitter = Math.random();\n+  let seed = 1;\n+  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;\n+  const jitter = next();\n   assert.ok(jitter > 0.5, \"jitter too low\");\n });\n\n\u001b[0m\n\u001b[0m$ \u001b[0mfor i in $(seq 1 20); do node --test flaky.test.mjs >/dev/null 2>&1 || echo \"run $i FAILED\"; done; echo \"done\"; node --test flaky.test.mjs 2>&1 | tail -5\ndone\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 119.895086\n\u001b[0m\n",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/.data/opencode/opencode.db"
+}

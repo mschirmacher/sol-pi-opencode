@@ -1,0 +1,14 @@
+{
+  "arm": "off",
+  "task": "T3",
+  "title": "debug a committed build-failure log (~30KB)",
+  "opencodeExit": 0,
+  "timedOut": false,
+  "verifierScore": 1,
+  "durationMs": 43871,
+  "verifierOut": "",
+  "verifierErr": "",
+  "runOut": "The long log is noise; the real failure is at the end: `sumAll is not defined` in src/main.js.\nRoot cause: the 400-line compile log was noise — the actual failure was `ReferenceError: sumAll is not defined` at src/main.js:2. Fixed by defining `sumAll` in src/main.js:1. `bash build.sh` now exits 0 and prints `BUILD_OK 6`.\n",
+  "runErr": "na/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js:2:15\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.22.1\n\u001b[0m\n\u001b[0m→ \u001b[0mRead src/main.js\n\u001b[0m\n\u001b[0m← \u001b[0mEdit src/main.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js\n@@ -1,3 +1,7 @@\n+function sumAll(nums) {\n+  return nums.reduce((acc, n) => acc + n, 0);\n+}\n+\n const items = [1, 2, 3];\n const total = sumAll(items);\n console.log(\"BUILD_OK\", total);\n\n\u001b[0m\n\u001b[0m$ \u001b[0mbash build.sh > /tmp/opencode/build.log 2>&1; echo \"exit=$?\"; grep -m1 BUILD_OK /tmp/opencode/build.log\nexit=0\nBUILD_OK 6\n\u001b[0m\n",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/.data/opencode/opencode.db"
+}

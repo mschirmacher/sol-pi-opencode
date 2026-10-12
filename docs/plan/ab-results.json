@@ -1,0 +1,436 @@
+{
+  "arms": [
+    "off",
+    "on",
+    "op-only"
+  ],
+  "rows": [
+    {
+      "task": "T1",
+      "byArm": {
+        "off": {
+          "rec": {
+            "arm": "off",
+            "task": "T1",
+            "title": "fix 2 failing unit tests",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 32481,
+            "verifierOut": "TAP version 13\n# Subtest: add\nok 1 - add\n  ---\n  duration_ms: 0.916347\n  type: 'test'\n  ...\n# Subtest: sub\nok 2 - sub\n  ---\n  duration_ms: 0.108788\n  type: 'test'\n  ...\n# Subtest: mul\nok 3 - mul\n  ---\n  duration_ms: 0.091796\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 129.287509\n",
+            "verifierErr": "",
+            "runOut": "Fixed: `add` and `sub` had swapped operators in calc.js:1-2. All 3 tests pass.\n",
+            "runErr": "Bootstrap (node:internal/test_runner/harness:296:3)\n  ...\n# Subtest: mul\nok 3 - mul\n  ---\n  duration_ms: 0.156561\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 1\n# fail 2\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 141.323136\n\u001b[0m\n\u001b[0m→ \u001b[0mRead calc.js\n\u001b[0m→ \u001b[0mRead calc.test.mjs\n\u001b[0m\n\u001b[0m← \u001b[0mEdit calc.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T1/calc.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T1/calc.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T1/calc.js\n@@ -1,3 +1,3 @@\n-export function add(a, b) { return a - b; }\n-export function sub(a, b) { return a + b; }\n+export function add(a, b) { return a + b; }\n+export function sub(a, b) { return a - b; }\n export function mul(a, b) { return a * b; }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test 2>&1 | tail -10\n...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 179.140808\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/T1/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 41043,
+            "input": 8212,
+            "output": 414,
+            "cacheRead": 32417,
+            "reasoning": 0,
+            "turns": 5,
+            "sessions": 1,
+            "toolCalls": 5,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.3333333333333333
+          }
+        },
+        "on": {
+          "rec": {
+            "arm": "on",
+            "task": "T1",
+            "title": "fix 2 failing unit tests",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 29825,
+            "verifierOut": "TAP version 13\n# Subtest: add\nok 1 - add\n  ---\n  duration_ms: 1.268979\n  type: 'test'\n  ...\n# Subtest: sub\nok 2 - sub\n  ---\n  duration_ms: 0.136298\n  type: 'test'\n  ...\n# Subtest: mul\nok 3 - mul\n  ---\n  duration_ms: 0.111304\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 171.193829\n",
+            "verifierErr": "",
+            "runOut": "Fixed: `add` and `sub` were swapped in calc.js:1-2. All 3 tests pass.\n",
+            "runErr": "s\nopencode.json\n\u001b[0m\n\u001b[0m→ \u001b[0mRead calc.js\n\u001b[0m→ \u001b[0mRead calc.test.mjs\n\u001b[0m\n\u001b[0m← \u001b[0mEdit calc.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T1/calc.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T1/calc.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T1/calc.js\n@@ -1,3 +1,3 @@\n-export function add(a, b) { return a - b; }\n-export function sub(a, b) { return a + b; }\n+export function add(a, b) { return a + b; }\n+export function sub(a, b) { return a - b; }\n export function mul(a, b) { return a * b; }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test\nTAP version 13\n# Subtest: add\nok 1 - add\n  ---\n  duration_ms: 1.019915\n  type: 'test'\n  ...\n# Subtest: sub\nok 2 - sub\n  ---\n  duration_ms: 0.151481\n  type: 'test'\n  ...\n# Subtest: mul\nok 3 - mul\n  ---\n  duration_ms: 0.113667\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 138.462579\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/T1/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 41829,
+            "input": 8386,
+            "output": 411,
+            "cacheRead": 33032,
+            "reasoning": 0,
+            "turns": 5,
+            "sessions": 1,
+            "toolCalls": 5,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.3333333333333333
+          }
+        },
+        "op-only": {
+          "rec": {
+            "arm": "op-only",
+            "task": "T1",
+            "title": "fix 2 failing unit tests",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 24064,
+            "verifierOut": "TAP version 13\n# Subtest: add\nok 1 - add\n  ---\n  duration_ms: 0.834984\n  type: 'test'\n  ...\n# Subtest: sub\nok 2 - sub\n  ---\n  duration_ms: 0.10891\n  type: 'test'\n  ...\n# Subtest: mul\nok 3 - mul\n  ---\n  duration_ms: 0.078188\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 119.537292\n",
+            "verifierErr": "",
+            "runOut": "Fixed: `add` used `-` and `sub` used `+` (swapped). All 3 tests pass.\n",
+            "runErr": "n\n\u001b[0m\n\u001b[0m→ \u001b[0mRead calc.test.mjs\n\u001b[0m→ \u001b[0mRead calc.js\n\u001b[0m\n\u001b[0m← \u001b[0mEdit calc.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T1/calc.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T1/calc.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T1/calc.js\n@@ -1,3 +1,3 @@\n-export function add(a, b) { return a - b; }\n-export function sub(a, b) { return a + b; }\n+export function add(a, b) { return a + b; }\n+export function sub(a, b) { return a - b; }\n export function mul(a, b) { return a * b; }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test\nTAP version 13\n# Subtest: add\nok 1 - add\n  ---\n  duration_ms: 1.172863\n  type: 'test'\n  ...\n# Subtest: sub\nok 2 - sub\n  ---\n  duration_ms: 0.128096\n  type: 'test'\n  ...\n# Subtest: mul\nok 3 - mul\n  ---\n  duration_ms: 0.10149\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 167.724648\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T1/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 33551,
+            "input": 8397,
+            "output": 374,
+            "cacheRead": 24780,
+            "reasoning": 0,
+            "turns": 4,
+            "sessions": 1,
+            "toolCalls": 5,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.5
+          }
+        }
+      }
+    },
+    {
+      "task": "T2",
+      "byArm": {
+        "off": {
+          "rec": {
+            "arm": "off",
+            "task": "T2",
+            "title": "add a function + tests",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 29123,
+            "verifierOut": "TAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 0.85807\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 132.381367\n",
+            "verifierErr": "",
+            "runOut": "Done. `shout` now returns `s.toUpperCase() + \"!\"`; `node --test` passes (1/1).\n",
+            "runErr": "12 09:48 .data\ndrwxr-xr-x 7 agent agent 4096 Oct 12 09:48 .git\ndrwxr-xr-x 4 agent agent 4096 Oct 12 09:48 .opencode\n-rw-r--r-- 1 agent agent  582 Oct 12 09:48 opencode.json\n-rw-r--r-- 1 agent agent   80 Oct 12 09:48 str.js\n-rw-r--r-- 1 agent agent  163 Oct 12 09:48 str.test.mjs\n\u001b[0m\n\u001b[0m→ \u001b[0mRead str.js\n\u001b[0m→ \u001b[0mRead str.test.mjs\n\u001b[0m\n\u001b[0m← \u001b[0mEdit str.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/str.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/str.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/str.js\n@@ -1,3 +1,3 @@\n export function shout(s) {\n-  // TODO: return s uppercased with a trailing \"!\"\n+  return s.toUpperCase() + \"!\";\n }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test\nTAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 0.93103\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 136.131921\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/T2/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 40453,
+            "input": 8057,
+            "output": 410,
+            "cacheRead": 31986,
+            "reasoning": 0,
+            "turns": 5,
+            "sessions": 1,
+            "toolCalls": 5,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.3333333333333333
+          }
+        },
+        "on": {
+          "rec": {
+            "arm": "on",
+            "task": "T2",
+            "title": "add a function + tests",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 46375,
+            "verifierOut": "TAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 0.997078\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 142.147121\n",
+            "verifierErr": "",
+            "runOut": "Done — `str.js:2` now returns `s.toUpperCase() + \"!\"`; `node --test` passes (1/1).\n",
+            "runErr": ":///home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.test.mjs:4:28)\n    Test.runInAsyncScope (node:async_hooks:214:14)\n    Test.run (node:internal/test_runner/test:1047:25)\n    Test.start (node:internal/test_runner/test:944:17)\n    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 0\n# fail 1\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 150.753039\n\u001b[0m\n\u001b[0m← \u001b[0mEdit str.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/str.js\n@@ -1,3 +1,3 @@\n export function shout(s) {\n-  // TODO: return s uppercased with a trailing \"!\"\n+  return s.toUpperCase() + \"!\";\n }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test 2>&1 | tail -8\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 128.909711\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/T2/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 52997,
+            "input": 8694,
+            "output": 697,
+            "cacheRead": 43606,
+            "reasoning": 0,
+            "turns": 6,
+            "sessions": 1,
+            "toolCalls": 6,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.25
+          }
+        },
+        "op-only": {
+          "rec": {
+            "arm": "op-only",
+            "task": "T2",
+            "title": "add a function + tests",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 38918,
+            "verifierOut": "TAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 1.066143\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 4314.65001\n",
+            "verifierErr": "",
+            "runOut": "Done. `str.js:2` now returns `s.toUpperCase() + \"!\"` and `node --test` passes (1/1).\n",
+            "runErr": "xr-xr-x 7 agent agent 4096 Oct 12 09:56 .git\ndrwxr-xr-x 4 agent agent 4096 Oct 12 09:56 .opencode\n-rw-r--r-- 1 agent agent  582 Oct 12 09:56 opencode.json\n-rw-r--r-- 1 agent agent   80 Oct 12 09:56 str.js\n-rw-r--r-- 1 agent agent  163 Oct 12 09:56 str.test.mjs\n\u001b[0m\n\u001b[0m→ \u001b[0mRead str.js\n\u001b[0m→ \u001b[0mRead str.test.mjs\n\u001b[0m\n\u001b[0m← \u001b[0mEdit str.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T2/str.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T2/str.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T2/str.js\n@@ -1,3 +1,3 @@\n export function shout(s) {\n-  // TODO: return s uppercased with a trailing \"!\"\n+  return s.toUpperCase() + \"!\";\n }\n\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test 2>&1\nTAP version 13\n# Subtest: shout\nok 1 - shout\n  ---\n  duration_ms: 1.318411\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 137.047853\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T2/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 41731,
+            "input": 8260,
+            "output": 568,
+            "cacheRead": 32903,
+            "reasoning": 0,
+            "turns": 5,
+            "sessions": 1,
+            "toolCalls": 5,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.3333333333333333
+          }
+        }
+      }
+    },
+    {
+      "task": "T3",
+      "byArm": {
+        "off": {
+          "rec": {
+            "arm": "off",
+            "task": "T3",
+            "title": "debug a committed build-failure log (~30KB)",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 43871,
+            "verifierOut": "",
+            "verifierErr": "",
+            "runOut": "The long log is noise; the real failure is at the end: `sumAll is not defined` in src/main.js.\nRoot cause: the 400-line compile log was noise — the actual failure was `ReferenceError: sumAll is not defined` at src/main.js:2. Fixed by defining `sumAll` in src/main.js:1. `bash build.sh` now exits 0 and prints `BUILD_OK 6`.\n",
+            "runErr": "na/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js:2:15\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.22.1\n\u001b[0m\n\u001b[0m→ \u001b[0mRead src/main.js\n\u001b[0m\n\u001b[0m← \u001b[0mEdit src/main.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/src/main.js\n@@ -1,3 +1,7 @@\n+function sumAll(nums) {\n+  return nums.reduce((acc, n) => acc + n, 0);\n+}\n+\n const items = [1, 2, 3];\n const total = sumAll(items);\n console.log(\"BUILD_OK\", total);\n\n\u001b[0m\n\u001b[0m$ \u001b[0mbash build.sh > /tmp/opencode/build.log 2>&1; echo \"exit=$?\"; grep -m1 BUILD_OK /tmp/opencode/build.log\nexit=0\nBUILD_OK 6\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/T3/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 49335,
+            "input": 8106,
+            "output": 583,
+            "cacheRead": 40646,
+            "reasoning": 0,
+            "turns": 6,
+            "sessions": 1,
+            "toolCalls": 5,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.25
+          }
+        },
+        "on": {
+          "rec": {
+            "arm": "on",
+            "task": "T3",
+            "title": "debug a committed build-failure log (~30KB)",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 47264,
+            "verifierOut": "",
+            "verifierErr": "",
+            "runOut": "Root cause: the 400 `[compile]` lines are noise; the real failure is at the end — `ReferenceError: sumAll is not defined` in `src/main.js:2`.\nFixed. `sumAll` was never defined in `src/main.js` — added it. `bash build.sh` now exits 0 and prints `BUILD_OK 6`.\n",
+            "runErr": "ed\n    at file:///home/thana/_private-projekte/sol-pi-opencode/.ab/on/T3/src/main.js:2:15\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.22.1\nEXIT=1\n\u001b[0m\n\u001b[0m← \u001b[0mEdit src/main.js\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T3/src/main.js\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T3/src/main.js\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T3/src/main.js\n@@ -1,3 +1,7 @@\n+function sumAll(nums) {\n+  return nums.reduce((acc, n) => acc + n, 0);\n+}\n+\n const items = [1, 2, 3];\n const total = sumAll(items);\n console.log(\"BUILD_OK\", total);\n\n\u001b[0m\n\u001b[0m$ \u001b[0mbash build.sh > /tmp/opencode/build.log 2>&1; echo \"EXIT=$?\"; grep -m1 '^BUILD_OK' /tmp/opencode/build.log\nEXIT=0\nBUILD_OK 6\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/T3/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 56171,
+            "input": 9822,
+            "output": 724,
+            "cacheRead": 45625,
+            "reasoning": 0,
+            "turns": 6,
+            "sessions": 1,
+            "toolCalls": 7,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.25
+          }
+        },
+        "op-only": {
+          "rec": {
+            "arm": "op-only",
+            "task": "T3",
+            "title": "debug a committed build-failure log (~30KB)",
+            "opencodeExit": -1,
+            "timedOut": true,
+            "verifierScore": 0,
+            "durationMs": 309055,
+            "verifierOut": "",
+            "verifierErr": "",
+            "runOut": "",
+            "runErr": "",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T3/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 0,
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "reasoning": 0,
+            "turns": 0,
+            "sessions": 0,
+            "toolCalls": 0,
+            "replayTokens": 0,
+            "adjacencyRate": 0,
+            "eligibleRate": 0
+          }
+        }
+      }
+    },
+    {
+      "task": "T4",
+      "byArm": {
+        "off": {
+          "rec": {
+            "arm": "off",
+            "task": "T4",
+            "title": "multi-file refactor keeping tests green",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 48274,
+            "verifierOut": "TAP version 13\n# Subtest: cart\nok 1 - cart\n  ---\n  duration_ms: 1.15403\n  type: 'test'\n  ...\n# Subtest: admin\nok 2 - admin\n  ---\n  duration_ms: 0.112351\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 129.119981\n",
+            "verifierErr": "",
+            "runOut": "Done. `discount()` now lives in `shared.js:1`; `cart.js` and `admin.js` import and re-export it. `node --test` passes (2/2), tests untouched.\n",
+            "runErr": "Oct 12 09:51 app.test.mjs\n-rw-r--r-- 1 agent agent  140 Oct 12 09:51 cart.js\n-rw-r--r-- 1 agent agent  582 Oct 12 09:51 opencode.json\n\u001b[0m\n\u001b[0m→ \u001b[0mRead cart.js\n\u001b[0m→ \u001b[0mRead admin.js\n\u001b[0m→ \u001b[0mRead app.test.mjs\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test 2>&1 | tail -20; echo \"---exit: ${PIPESTATUS[0]}---\"; ls package.json 2>&1\nok 1 - cart\n  ---\n  duration_ms: 1.165156\n  type: 'test'\n  ...\n# Subtest: admin\nok 2 - admin\n  ---\n  duration_ms: 0.135515\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 148.807086\n---exit: 0---\nls: cannot access 'package.json': No such file or directory\n\u001b[0m\n\u001b[0m← \u001b[0mWrite shared.js\nWrote file successfully.\n\u001b[0m\n\u001b[0m← \u001b[0mWrite cart.js\nWrote file successfully.\n\u001b[0m\n\u001b[0m← \u001b[0mWrite admin.js\nWrote file successfully.\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test 2>&1 | tail -8; echo \"---exit: ${PIPESTATUS[0]}---\"\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 142.162341\n---exit: 0---\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/T4/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 52198,
+            "input": 8415,
+            "output": 1195,
+            "cacheRead": 42588,
+            "reasoning": 0,
+            "turns": 6,
+            "sessions": 1,
+            "toolCalls": 9,
+            "replayTokens": 0,
+            "adjacencyRate": 0.3333333333333333,
+            "eligibleRate": 0.25
+          }
+        },
+        "on": {
+          "rec": {
+            "arm": "on",
+            "task": "T4",
+            "title": "multi-file refactor keeping tests green",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 68184,
+            "verifierOut": "TAP version 13\n# Subtest: cart\nok 1 - cart\n  ---\n  duration_ms: 0.978989\n  type: 'test'\n  ...\n# Subtest: admin\nok 2 - admin\n  ---\n  duration_ms: 0.112168\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 131.736033\n",
+            "verifierErr": "",
+            "runOut": "Done. `discount()` now lives in `shared.js`; `cart.js` and `admin.js` import and re-export it. `node --test`: 2 pass, 0 fail.\n",
+            "runErr": "2 09:52 app.test.mjs\n-rw-r--r-- 1 agent agent  140 Oct 12 09:52 cart.js\n-rw-r--r-- 1 agent agent  582 Oct 12 09:52 opencode.json\n\u001b[0m\n\u001b[0m→ \u001b[0mRead cart.js\n\u001b[0m→ \u001b[0mRead admin.js\n\u001b[0m→ \u001b[0mRead app.test.mjs\n\u001b[0m\n\u001b[0m$ \u001b[0mls -la *.json 2>/dev/null; echo \"---\"; node --version; echo \"---\"; node --test 2>&1 | tail -20\n-rw-r--r-- 1 agent agent 582 Oct 12 09:52 opencode.json\n---\nv22.22.1\n---\nok 1 - cart\n  ---\n  duration_ms: 1.105453\n  type: 'test'\n  ...\n# Subtest: admin\nok 2 - admin\n  ---\n  duration_ms: 0.129574\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 152.896712\n\u001b[0m\n\u001b[0m← \u001b[0mWrite shared.js\nWrote file successfully.\n\u001b[0m\n\u001b[0m← \u001b[0mWrite cart.js\nWrote file successfully.\n\u001b[0m\n\u001b[0m← \u001b[0mWrite admin.js\nWrote file successfully.\n\u001b[0m\n\u001b[0m$ \u001b[0mnode --test 2>&1 | tail -12\nduration_ms: 0.155578\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 228.399273\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/T4/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 64617,
+            "input": 8918,
+            "output": 1068,
+            "cacheRead": 54631,
+            "reasoning": 0,
+            "turns": 7,
+            "sessions": 1,
+            "toolCalls": 9,
+            "replayTokens": 0,
+            "adjacencyRate": 0.3333333333333333,
+            "eligibleRate": 0.2
+          }
+        },
+        "op-only": null
+      }
+    },
+    {
+      "task": "T5",
+      "byArm": {
+        "off": {
+          "rec": {
+            "arm": "off",
+            "task": "T5",
+            "title": "investigate a noisy test-run log and fix the flaky test",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 65443,
+            "verifierOut": "TAP version 13\n# Subtest: flaky\nok 1 - flaky\n  ---\n  duration_ms: 1.077821\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 127.070818\nTAP version 13\n# Subtest: flaky\nok 1 - flaky\n  ---\n  duration_ms: 0.920083\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 123.064645\n",
+            "verifierErr": "",
+            "runOut": "The test fails ~50% of the time because it asserts on unseeded `Math.random()`. I'll make it deterministic with a seeded PRNG.\nVerifying with 50 consecutive runs:\nFixed: replaced `Math.random()` with a seeded mulberry32 PRNG (seed 42 → 0.6011), so the assertion is now deterministic. `node --test` passed 50/50 runs.\n",
+            "runErr": "7 0.1844118325971067\n\u001b[0m\n\u001b[0m← \u001b[0mEdit flaky.test.mjs\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T5/flaky.test.mjs\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T5/flaky.test.mjs\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/off/T5/flaky.test.mjs\n@@ -1,6 +1,16 @@\n import { test } from \"node:test\";\n import assert from \"node:assert\";\n+function mulberry32(seed) {\n+  let a = seed | 0;\n+  return () => {\n+    a = (a + 0x6d2b79f5) | 0;\n+    let t = Math.imul(a ^ (a >>> 15), 1 | a);\n+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;\n+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;\n+  };\n+}\n+\n test(\"flaky\", () => {\n-  const jitter = Math.random();\n+  const jitter = mulberry32(42)();\n   assert.ok(jitter > 0.5, \"jitter too low\");\n });\n\n\u001b[0m\n\u001b[0m$ \u001b[0mfails=0; for i in $(seq 1 50); do node --test >/dev/null 2>&1 || fails=$((fails+1)); done; echo \"failures: $fails/50\"\nfailures: 0/50\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/T5/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 52564,
+            "input": 8243,
+            "output": 1258,
+            "cacheRead": 43063,
+            "reasoning": 0,
+            "turns": 6,
+            "sessions": 1,
+            "toolCalls": 7,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.25
+          }
+        },
+        "on": {
+          "rec": {
+            "arm": "on",
+            "task": "T5",
+            "title": "investigate a noisy test-run log and fix the flaky test",
+            "opencodeExit": 0,
+            "timedOut": false,
+            "verifierScore": 1,
+            "durationMs": 45062,
+            "verifierOut": "TAP version 13\n# Subtest: flaky\nok 1 - flaky\n  ---\n  duration_ms: 0.896471\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 122.555772\nTAP version 13\n# Subtest: flaky\nok 1 - flaky\n  ---\n  duration_ms: 0.845823\n  type: 'test'\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 121.397142\n",
+            "verifierErr": "",
+            "runOut": "The test uses `Math.random()` — inherently non-deterministic. I'll replace it with a seeded PRNG so the value is fixed across runs.\nReplaced `Math.random()` with a fixed-seed LCG (yields 0.514 every run). Verified: 20 consecutive `node --test` runs, 0 failures.\n",
+            "runErr": "m✱ \u001b[0mGlob \"**/flaky*\"\u001b[90m 2 matches\u001b[0m\n\u001b[0m→ \u001b[0mRead flaky.test.mjs\n\u001b[0m→ \u001b[0mRead flaky.log\n\u001b[0m\n\u001b[0m← \u001b[0mEdit flaky.test.mjs\nIndex: /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/flaky.test.mjs\n===================================================================\n--- /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/flaky.test.mjs\n+++ /home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/flaky.test.mjs\n@@ -1,6 +1,8 @@\n import { test } from \"node:test\";\n import assert from \"node:assert\";\n test(\"flaky\", () => {\n-  const jitter = Math.random();\n+  let seed = 1;\n+  const next = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;\n+  const jitter = next();\n   assert.ok(jitter > 0.5, \"jitter too low\");\n });\n\n\u001b[0m\n\u001b[0m$ \u001b[0mfor i in $(seq 1 20); do node --test flaky.test.mjs >/dev/null 2>&1 || echo \"run $i FAILED\"; done; echo \"done\"; node --test flaky.test.mjs 2>&1 | tail -5\ndone\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 119.895086\n\u001b[0m\n",
+            "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/T5/.data/opencode/opencode.db"
+          },
+          "m": {
+            "total": 45575,
+            "input": 8627,
+            "output": 1235,
+            "cacheRead": 35713,
+            "reasoning": 0,
+            "turns": 5,
+            "sessions": 1,
+            "toolCalls": 6,
+            "replayTokens": 0,
+            "adjacencyRate": 1,
+            "eligibleRate": 0.3333333333333333
+          }
+        },
+        "op-only": null
+      }
+    }
+  ],
+  "totals": {
+    "off": {
+      "total": 235593,
+      "turns": 28,
+      "score": 5,
+      "runs": 5,
+      "replay": 0
+    },
+    "on": {
+      "total": 261189,
+      "turns": 29,
+      "score": 5,
+      "runs": 5,
+      "replay": 0
+    },
+    "op-only": {
+      "total": 75282,
+      "turns": 9,
+      "score": 2,
+      "runs": 3,
+      "replay": 0
+    }
+  }
+}

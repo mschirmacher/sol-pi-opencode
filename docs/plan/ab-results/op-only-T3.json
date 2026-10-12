@@ -1,0 +1,14 @@
+{
+  "arm": "op-only",
+  "task": "T3",
+  "title": "debug a committed build-failure log (~30KB)",
+  "opencodeExit": -1,
+  "timedOut": true,
+  "verifierScore": 0,
+  "durationMs": 309055,
+  "verifierOut": "",
+  "verifierErr": "",
+  "runOut": "",
+  "runErr": "",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/op-only/T3/.data/opencode/opencode.db"
+}
