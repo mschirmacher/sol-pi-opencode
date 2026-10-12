@@ -14,5 +14,18 @@
   "runOut": "pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context \n[audit] # cancelled 0 trace=ok seq=560 pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context \n[audit] # skipped 0 trace=ok seq=560 pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context \n[audit] # todo 0 trace=ok seq=560 pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context \n[audit] # duration_ms 195.76084 trace=ok seq=560 pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context \n[audit]  trace=ok seq=560 pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context pad-audit-context \n[audit] ============================================================\n[audit] suite audit complete: unresolved_cases=5 (details are interleaved above; scroll the full output)\n\u001b[0m\n",
   "runErr": "",
   "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L1-r1/.data/opencode/opencode.db",
-  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L1-r1/.cache"
+  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L1-r1/.cache",
+  "counters": {
+    "obsArchiveFiles": 0,
+    "obsPlaceholderParts": 0,
+    "reducerJournalEntries": 0,
+    "occStateFiles": 0,
+    "occTransitions": 0,
+    "fusionTags": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "fusionTagsTotal": 0
+  }
 }
