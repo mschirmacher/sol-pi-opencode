@@ -4,9 +4,8 @@ Living tracker. Last updated: 2026-10-12.
 
 ## Goal
 
-opencode plugin porting SoL-Pi's 4 token-efficiency mechanisms. opencode 1.x
-priority; 2.x via official dual-entry pattern. One repo / one branch / one
-package (ADR-001).
+opencode plugin porting SoL-Pi's 4 token-efficiency mechanisms; 1.x priority,
+2.x via official dual-entry pattern; one repo/branch/package (ADR-001).
 
 ## Phases
 
@@ -17,41 +16,43 @@ package (ADR-001).
 | P2 | Action Fusion v1 + tests | done (code+tests); runtime E2E needs user env with real opencode + API key |
 | P3 | Online Context Compact v1 | done (code+tests); runtime E2E needs real opencode + API key |
 | P4 | Evidence-Preserving Reducer v1 | done (code+tests); runtime E2E needs real opencode + API key |
-| P5 | v2 adapters for shipped mechanisms | not started |
+| P5 | v2 adapters for shipped mechanisms | done (code+tests, @opencode/plugin 2.0.26 types; runtime E2E needs real opencode 2.x) |
 | P6 | Measurement / validation | not started |
-
-Priority order: ObservationPack → Action Fusion → OCC → Reducer (rationale in
-`docs/plan/mapping.md`).
 
 ## Key facts
 
-- SoL-Pi mechanisms, constants, numbers: `docs/research/sol-pi.md`
-  (10 KiB threshold, 2 full sends, sha256 guard, cacheWriteReadRatio 12.5,
+- SoL-Pi mechanisms/constants/numbers: `docs/research/sol-pi.md` (10 KiB
+  threshold, 2 full sends, sha256 guard, cacheWriteReadRatio 12.5,
   ObservationPack A/B −23.58% bill).
-- opencode 1.x/2.x hook surface + breaking changes + dual-entry:
+- 1.x/2.x hook surface + breaking changes + dual-entry:
   `docs/research/opencode-extensions.md` (V1 object entrypoint needs
-  opencode-ai ≥ 1.18.29).
-- Repo decision + consequences: `docs/plan/adr-001-repo-structure.md`.
-- Per-mechanism hook mapping, feasibility, resolved questions (a)–(d):
-  `docs/plan/mapping.md`.
-- Phases + done-criteria: `docs/plan/roadmap.md`.
-- P2 verified against v1.19.0 source: built-in arg decode strips excess keys
-  (so `thenRun` is tolerated, stripped in our before-hook anyway); after-hook
-  output rewrite reaches model AND storage. Addendum: `docs/plan/mapping.md`.
-- Resolved during planning: 1.x compaction trigger = SDK `client.session.summarize`; 1.x archives under XDG cache keyed by sessionID.
+  opencode-ai ≥ 1.18.29). Repo decision: `docs/plan/adr-001-repo-structure.md`;
+  per-mechanism mapping + questions (a)–(d): `docs/plan/mapping.md`;
+  phases + done-criteria: `docs/plan/roadmap.md`.
+- P2 verified against v1.19.0 source: built-in arg decode strips excess keys;
+  after-hook output rewrite reaches model AND storage. Addendum: mapping.md.
 - P3 boundary signal: 1.x `todo.updated` events (built-in todo tool) are the
   completed-step signal; `session.idle` is only the quiescent firing point.
-  LIMITATION: if the model never uses todos, OCC never fires (no fabricated
-  boundaries) — documented in src/v1/online-context-compact.ts.
+  1.x compaction trigger = SDK `client.session.summarize`; archives under
+  XDG cache keyed by sessionID.
+  LIMITATION: no todos → OCC never fires (src/v1/online-context-compact.ts).
+- P5 (v2 adapters, src/v2/*): all four mechanisms wired against real
+  @opencode/plugin 2.0.26 promise types. Deviations found vs docs:
+  `generate.text` model ref is `{id, providerID, variant?}` (not
+  `{providerID, modelID}`); no `todo.updated` event — plan boundaries observed
+  on the todo tool's `execute.after`; `Message.content` is readonly →
+  projection replaces the message entry copy-on-write; `execute.before`
+  `event.input` IS mutable (thenRun strip works as sketched); built-in tool
+  `input` may be an Effect Schema — thenRun JSON-Schema extension applies
+  only when it is a plain JSON Schema (else guidance-only). OCC window size
+  not resolved in v2 (economics use the request-based bound).
 - P4 spike (v1.19.0, throwaway-session model call): CONFIRMED.
-  `session.create` → `session.prompt({agent, model:{providerID,modelID},
-  parts})` blocks, returns last assistant WithParts (session/prompt.ts:1052,
-  1499) → `session.delete`. Hidden no-tools agent via the `config` hook: hook
-  gets the live cached config object (plugin/index.ts:247); Agent.state reads
-  cfg.agent lazily after plugin load (agent/agent.ts:267) → `sol-pi-reducer`
-  (subagent, hidden, steps 1, `*:deny`). Gaps: no server-side prompt timeout
-  (bounded client-side); missing agent/model → fail-open. Receipt marker line
-  `sol_pi_evidence_receipt_v1` is already excluded by ObservationPack.
+  `session.create` → `session.prompt({agent, model, parts})` blocks and returns
+  the last assistant WithParts → `session.delete`. Hidden no-tools agent
+  `sol-pi-reducer` registered on the live config object via the `config` hook.
+  Gaps: no server-side prompt timeout (bounded client-side); missing
+  agent/model → fail-open. Receipt marker `sol_pi_evidence_receipt_v1` is
+  already excluded by ObservationPack.
 
 ## Invariants (non-negotiable)
 
