@@ -31,6 +31,7 @@ function buildReceipt(entry) {
 
 function pick(body) {
   const hay = JSON.stringify(body.messages ?? []);
+  if (hay.includes("title generator")) return { content: "e2e session", finish: "stop" };
   for (const e of entries) {
     if (!e.consumed && e.match && hay.includes(e.match)) return e;
   }

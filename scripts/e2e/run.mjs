@@ -196,6 +196,9 @@ const dir = join(E2E, scenarioName);
 rmSync(dir, { recursive: true, force: true });
 for (const sub of ["", ".opencode/plugins", ".data", ".cache", ".config"]) mkdirSync(join(dir, sub), { recursive: true });
 for (const [name, content] of Object.entries(sc.fixtures)) writeFileSync(join(dir, name), content);
+spawnSync("git", ["init", "-q"], { cwd: dir });
+spawnSync("git", ["config", "user.email", "e2e@local"], { cwd: dir });
+spawnSync("git", ["config", "user.name", "e2e"], { cwd: dir });
 
 writeFileSync(join(dir, ".opencode", "plugins", "sol-pi.ts"),
   `export { server, SolPiOpenCodePlugin } from "${REPO}/src/index.ts";\nexport { default } from "${REPO}/src/index.ts";\n`);
@@ -239,7 +242,7 @@ async function waitReady() {
 let code = -1, stdout = "", stderr = "";
 try {
   await waitReady();
-  const r = spawnSync("opencode", ["run", "--auto", "--model", "mock/test", sc.goal], {
+  const r = spawnSync("opencode", ["run", "--auto", "--print-logs", "--log-level", "DEBUG", "--model", "mock/test", sc.goal], {
     cwd: dir,
     env: {
       ...process.env,
@@ -248,6 +251,10 @@ try {
       XDG_CONFIG_HOME: join(dir, ".config"),
       HOME: homedir(),
       TMPDIR: tmpdir(),
+      PWD: dir,
+      OPENCODE_CONFIG_DIR: join(dir, ".config", "opencode"),
+      OPENCODE: undefined,
+      OPENCODE_PID: undefined,
     },
     timeout: 180_000,
     encoding: "utf8",
@@ -278,6 +285,7 @@ try {
   process.exit(0);
 } catch (err) {
   console.log(`FAIL ${scenarioName}: ${err.message}`);
+  writeFileSync(join(dir, "run-stderr.log"), stderr);
   console.log("--- stdout ---\n" + stdout.slice(-1500));
   console.log("--- stderr ---\n" + stderr.slice(-1500));
   console.log("--- mock ---\n" + mockOut.slice(-500));
