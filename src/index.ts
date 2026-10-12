@@ -4,6 +4,7 @@ import { loadConfig } from "./core/config.js";
 import { createActionFusionHooks } from "./v1/action-fusion.js";
 import { createObservationPackHooks } from "./v1/observation-pack.js";
 import { createOnlineContextCompactHooks } from "./v1/online-context-compact.js";
+import { createEvidencePreservingReducerHooks } from "./v1/evidence-preserving-reducer.js";
 
 /** Compose two hook objects; shared hooks run in order (a before b). */
 function mergeHooks(a: Hooks, b: Hooks): Hooks {
@@ -34,6 +35,20 @@ function mergeHooks(a: Hooks, b: Hooks): Hooks {
 export async function server(input: PluginInput, options?: PluginOptions): Promise<Hooks> {
   const config = await loadConfig(input.directory);
   let hooks = createActionFusionHooks(input, config.actionFusion);
+  // Reducer runs after Action Fusion (so fused then_run outputs are visible)
+  // and before ObservationPack (so its receipt marker excludes it from
+  // re-packing; ObservationPack already skips receipt-marked text).
+  if (config.evidencePreservingReducer.enabled) {
+    hooks = mergeHooks(hooks, createEvidencePreservingReducerHooks(input, {
+      maxEvidenceItems: config.evidencePreservingReducer.maxEvidenceItems,
+      maxQuoteChars: config.evidencePreservingReducer.maxQuoteChars,
+      minLogBytes: config.evidencePreservingReducer.minLogBytes,
+      maxChars: config.evidencePreservingReducer.maxChars,
+      timeoutMs: config.evidencePreservingReducer.timeoutMs,
+      providerID: config.evidencePreservingReducer.providerID,
+      modelID: config.evidencePreservingReducer.modelID,
+    }));
+  }
   hooks = mergeHooks(hooks, createObservationPackHooks(input, config.observationPack));
   hooks = mergeHooks(hooks, createOnlineContextCompactHooks(input, config.onlineContextCompact));
   return hooks;

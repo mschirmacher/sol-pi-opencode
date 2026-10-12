@@ -20,8 +20,13 @@ export interface ActionFusionConfig extends FeatureConfig {
 }
 
 export interface ReducerConfig extends FeatureConfig {
-  provider?: string;
-  model?: string;
+  providerID?: string;
+  modelID?: string;
+  maxEvidenceItems: number;
+  maxQuoteChars: number;
+  minLogBytes: number;
+  maxChars: number;
+  timeoutMs: number;
 }
 
 export interface OnlineContextCompactConfig extends FeatureConfig {
@@ -54,7 +59,14 @@ export const DEFAULT_CONFIG: SolPiConfig = {
     minRequestsBetween: 2,
     subsequentCompactionMargin: 1.5,
   },
-  evidencePreservingReducer: { enabled: false },
+  evidencePreservingReducer: {
+    enabled: false,
+    maxEvidenceItems: 12,
+    maxQuoteChars: 600,
+    minLogBytes: 4_096,
+    maxChars: 600_000,
+    timeoutMs: 90_000,
+  },
   cacheWriteReadRatio: 12.5,
 };
 
@@ -148,8 +160,16 @@ function normalizeConfig(raw: unknown): SolPiConfig {
   if (typeof reducer === "object" && reducer !== null) {
     const e = reducer as Record<string, unknown>;
     out.evidencePreservingReducer.enabled = e.enabled === true;
-    if (typeof e.provider === "string") out.evidencePreservingReducer.provider = e.provider;
-    if (typeof e.model === "string") out.evidencePreservingReducer.model = e.model;
+    if (typeof e.providerID === "string") out.evidencePreservingReducer.providerID = e.providerID;
+    if (typeof e.modelID === "string") out.evidencePreservingReducer.modelID = e.modelID;
+    out.evidencePreservingReducer.maxEvidenceItems = positiveInt(
+      e.maxEvidenceItems,
+      out.evidencePreservingReducer.maxEvidenceItems,
+    );
+    out.evidencePreservingReducer.maxQuoteChars = positiveInt(e.maxQuoteChars, out.evidencePreservingReducer.maxQuoteChars);
+    out.evidencePreservingReducer.minLogBytes = positiveInt(e.minLogBytes, out.evidencePreservingReducer.minLogBytes);
+    out.evidencePreservingReducer.maxChars = positiveInt(e.maxChars, out.evidencePreservingReducer.maxChars);
+    out.evidencePreservingReducer.timeoutMs = positiveInt(e.timeoutMs, out.evidencePreservingReducer.timeoutMs);
   }
 
   if (typeof r.cacheWriteReadRatio === "number" && Number.isFinite(r.cacheWriteReadRatio) && r.cacheWriteReadRatio > 0) {
