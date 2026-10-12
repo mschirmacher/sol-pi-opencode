@@ -1,0 +1,18 @@
+{
+  "arm": "off",
+  "task": "L3",
+  "run": 1,
+  "tasksDir": "tasks-long",
+  "title": "refactor 6-file module keeping tests green (long)",
+  "opencodeExit": -1,
+  "timedOut": true,
+  "verifierScore": 0,
+  "verifierScorePartial": 0.3333333333333333,
+  "durationMs": 903332,
+  "verifierOut": "# tests 16\n# pass 16\n# fail 0\nSCORE 1/3\n",
+  "verifierErr": "",
+  "runOut": "\u001b[0m\n> build · qwen3.8-flash-next-iq3_xxs\n\u001b[0m\n",
+  "runErr": "",
+  "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L3-r1/.data/opencode/opencode.db",
+  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/off/L3-r1/.cache"
+}
