@@ -1,19 +1,21 @@
 #!/usr/bin/env node
-// P6c A/B single-run harness: drives real opencode 1.19.0 against the devbox-ai
+// P6c/P6d A/B single-run harness: drives real opencode 1.19.0 against the devbox-ai
 // proxy (token-metered, cost 0) for one (arm, task) pair, then runs the verifier.
 // Reuses the working invocation + provider config + plugin shim from spike-p6-e2e.
-// Usage: node scripts/ab/run-arm.mjs --arm <off|on|op-only> --task <T1..T5>
-import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+// opencode runs detached (nohup-style, own process group) and the harness polls
+// for the exit sentinel, so the whole script can be launched with `nohup ... &`
+// from a shell without any single foreground call exceeding tool timeouts.
+// Usage: node scripts/ab/run-arm.mjs --arm <off|on|op-only> --task <ID> [--tasks-dir tasks|tasks-long] [--run N]
+import { spawn, spawnSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import { TASKS } from "./tasks/index.mjs";
 
 const REPO = resolve(new URL("../..", import.meta.url).pathname);
 const AB = join(REPO, ".ab");
 const MODEL = "qwen3.8-flash-next-iq3_xxs";
 const BASE_URL = "http://aux.schirmacher.dev:8080/v1";
-const RUN_TIMEOUT = 300_000;
+const RUN_TIMEOUT = 900_000;
 
 function arg(name) {
   const i = process.argv.indexOf("--" + name);
@@ -21,12 +23,19 @@ function arg(name) {
 }
 const arm = arg("arm");
 const task = arg("task");
-if (!["off", "on", "op-only"].includes(arm) || !TASKS[task]) {
-  console.error("usage: run-arm.mjs --arm off|on|op-only --task T1..T5");
+const tasksDir = arg("tasks-dir") ?? "tasks";
+const runN = Number(arg("run") ?? "1");
+if (!["off", "on", "op-only"].includes(arm)) {
+  console.error("usage: run-arm.mjs --arm off|on|op-only --task <ID> [--tasks-dir DIR] [--run N]");
+  process.exit(2);
+}
+const { TASKS } = await import(new URL(`./${tasksDir}/index.mjs`, import.meta.url).href);
+if (!TASKS[task]) {
+  console.error(`unknown task ${task} (tasks dir: ${tasksDir}; have: ${Object.keys(TASKS).join(",")})`);
   process.exit(2);
 }
 
-const dir = join(AB, arm, task);
+const dir = join(AB, arm, `${task}-r${runN}`);
 rmSync(dir, { recursive: true, force: true });
 for (const sub of ["", ".opencode/plugins", ".data", ".cache", ".config/opencode"]) {
   mkdirSync(join(dir, sub), { recursive: true });
@@ -107,47 +116,87 @@ if (!key) {
   process.exit(3);
 }
 
-const t0 = Date.now();
-const r = spawnSync("opencode", ["run", "--auto", "--model", `devbox-ai/${MODEL}`, T.prompt], {
-  cwd: dir,
-  env: {
-    ...process.env,
-    SOL_PI_AB_KEY: key,
-    XDG_DATA_HOME: join(dir, ".data"),
-    XDG_CACHE_HOME: join(dir, ".cache"),
-    XDG_CONFIG_HOME: join(dir, ".config"),
-    OPENCODE_CONFIG_DIR: join(dir, ".config", "opencode"),
-    HOME: homedir(),
-    TMPDIR: tmpdir(),
-    PWD: dir,
-    OPENCODE: undefined,
-    OPENCODE_PID: undefined,
-  },
-  timeout: RUN_TIMEOUT,
-  encoding: "utf8",
-});
-const opencodeExit = r.status ?? -1;
-const timedOut = r.signal === "SIGTERM" || r.error?.code === "ETIMEDOUT";
+const logPath = join(dir, "opencode.log");
+const exitPath = join(dir, "opencode.exit");
+const promptPath = join(dir, ".prompt.txt");
+writeFileSync(promptPath, T.prompt);
+const env = {
+  ...process.env,
+  SOL_PI_AB_KEY: key,
+  XDG_DATA_HOME: join(dir, ".data"),
+  XDG_CACHE_HOME: join(dir, ".cache"),
+  XDG_CONFIG_HOME: join(dir, ".config"),
+  OPENCODE_CONFIG_DIR: join(dir, ".config", "opencode"),
+  HOME: homedir(),
+  TMPDIR: tmpdir(),
+  PWD: dir,
+  OPENCODE: undefined,
+  OPENCODE_PID: undefined,
+};
 
-const v = spawnSync("bash", ["-c", T.verify], { cwd: dir, timeout: 60_000, encoding: "utf8" });
+const t0 = Date.now();
+const child = spawn(
+  "bash",
+  ["-c", `opencode run --auto --model devbox-ai/${MODEL} "$(cat ${JSON.stringify(promptPath)})" > ${JSON.stringify(logPath)} 2>&1; echo $? > ${JSON.stringify(exitPath)}`],
+  { cwd: dir, env, detached: true, stdio: "ignore" },
+);
+child.unref();
+let timedOut = false;
+while (!existsSync(exitPath)) {
+  if (Date.now() - t0 > RUN_TIMEOUT) {
+    timedOut = true;
+    try { process.kill(-child.pid, "SIGKILL"); } catch {}
+    break;
+  }
+  spawnSync("sleep", ["5"]);
+}
+const opencodeExit = timedOut ? -1 : Number(readFileSync(exitPath, "utf8").trim());
+
+// Verifier: kept out of the fixture; written only after the agent run finished.
+let verifyCmd;
+if (T.verifyScript) {
+  writeFileSync(join(dir, ".verify.sh"), T.verifyScript);
+  verifyCmd = "bash .verify.sh";
+} else {
+  verifyCmd = T.verify;
+}
+const v = spawnSync("bash", ["-c", verifyCmd], { cwd: dir, timeout: 120_000, encoding: "utf8" });
 const score = v.status === 0 ? 1 : 0;
+const scoreMatch = /SCORE (\d+)\/(\d+)/.exec(v.stdout || "");
+const verifierScorePartial = scoreMatch ? Number(scoreMatch[1]) / Number(scoreMatch[2]) : score;
 
 const rec = {
   arm,
   task,
+  run: runN,
+  tasksDir,
   title: T.title,
   opencodeExit,
   timedOut,
   verifierScore: score,
+  verifierScorePartial,
   durationMs: Date.now() - t0,
   verifierOut: (v.stdout || "").slice(-400),
   verifierErr: (v.stderr || "").slice(-400),
-  runOut: (r.stdout || "").slice(-1000),
-  runErr: (r.stderr || "").slice(-1000),
+  runOut: existsSync(logPath) ? readFileSync(logPath, "utf8").slice(-1000) : "",
+  runErr: "",
   db: join(dir, ".data", "opencode", "opencode.db"),
+  cacheDir: join(dir, ".cache"),
 };
 mkdirSync(join(AB, "results"), { recursive: true });
-writeFileSync(join(AB, "results", `${arm}-${task}.json`), JSON.stringify(rec, null, 2));
+writeFileSync(join(dir, "result.json"), JSON.stringify(rec, null, 2));
+const resultPath = join(AB, "results", `${arm}-${task}-r${runN}.json`);
+writeFileSync(resultPath, JSON.stringify(rec, null, 2));
+
+// Copy the per-run result JSON into the tracked results dir and commit it.
+const tracked = join(REPO, "docs", "plan", "ab-results-long");
+mkdirSync(tracked, { recursive: true });
+const trackedPath = join(tracked, `${arm}-${task}-r${runN}.json`);
+writeFileSync(trackedPath, JSON.stringify(rec, null, 2));
+const rel = `docs/plan/ab-results-long/${arm}-${task}-r${runN}.json`;
+spawnSync("git", ["add", rel], { cwd: REPO });
+spawnSync("git", ["commit", "-m", `P6d: result ${arm}-${task}-r${runN}`, "--", rel], { cwd: REPO });
+
 console.log(
-  `RESULT arm=${arm} task=${task} opencodeExit=${opencodeExit} timedOut=${timedOut} score=${score} dur=${rec.durationMs}ms`,
+  `RESULT arm=${arm} task=${task} run=${runN} opencodeExit=${opencodeExit} timedOut=${timedOut} score=${score} partial=${verifierScorePartial.toFixed(2)} dur=${rec.durationMs}ms`,
 );
