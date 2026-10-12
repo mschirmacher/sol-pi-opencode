@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-out=$(node --test test/ 2>&1)
+out=$(node --test test/*.test.mjs 2>&1)
 printf '%s\n' "$out" | grep -E '^# (tests|pass|fail)' || true
 p=$(printf '%s\n' "$out" | sed -n 's/^# pass \([0-9]*\)$/\1/p')
 f=$(printf '%s\n' "$out" | sed -n 's/^# fail \([0-9]*\)$/\1/p')

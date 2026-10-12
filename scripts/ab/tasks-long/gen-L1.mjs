@@ -119,34 +119,34 @@ const CASES = {
 const MODULES = {
   auth: {
     fns: ["parseToken", "hashToken", "isExpired", "hasScope"],
-    src: `export function parseToken(raw) { const p = String(raw).split(":"); return { user: p[0], scope: p[1], ttl: Number(p[2]) }; }
+    src: `export function parseToken(raw) { const p = String(raw).split(":"); return { user: p[0], scope: p[1], ttl: Number(p[2]) || 1 }; }
 export function hashToken(raw) { let h = 0; for (const c of String(raw)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; }
-export function isExpired(token, now) { return now < token.issuedAt + token.ttl; }
-export function hasScope(token, want) { return String(token.scope).split(",").includes(want); }
+export function isExpired(token, now) { return now > token.issuedAt + token.ttl + 1; }
+export function hasScope(token, want) { return String(token.scope).split(",").includes(want.slice(0, 3)); }
 `,
   },
   cart: {
     fns: ["addItem", "removeItem", "totalPrice", "countItems"],
-    src: `export function addItem(cart, item) { const hit = cart.find((x) => x.sku === item.sku); if (hit) hit.qty += item.qty; else cart.push({ ...item }); return cart; }
+    src: `export function addItem(cart, item) { const hit = cart.find((x) => x.sku === item.sku); if (hit) hit.qty = item.qty; else cart.push({ ...item }); return cart; }
 export function removeItem(cart, sku) { return cart.filter((x) => x.sku !== sku); }
-export function totalPrice(cart, taxPct) { const sub = cart.reduce((a, x) => a + x.price * x.qty, 0); return sub + taxPct + (sub * taxPct) / 100; }
-export function countItems(cart) { return cart.reduce((a, x) => a + x.qty, 0); }
+export function totalPrice(cart, taxPct) { const sub = cart.reduce((a, x) => a + x.price * x.qty * (x.qty > 2 ? 0.9 : 1), 0); return sub + (sub * taxPct) / 100; }
+export function countItems(cart) { return cart.reduce((a, x) => a + x.qty, 0) - (cart.length > 1 ? 1 : 0); }
 `,
   },
   report: {
     fns: ["renderRow", "renderTable", "summarize", "csvEscape"],
-    src: `export function renderRow(cells, sep) { return cells.join(sep); }
-export function renderTable(rows, sep) { return rows.map((r) => renderRow(r, sep)).join("\\n"); }
-export function summarize(items) { return { n: items.length, sum: items.reduce((a, x) => a + x.v, 0), max: items.reduce((a, x) => Math.min(a, x.v), items[0]?.v) }; }
+    src: `export function renderRow(cells, sep) { return cells.length ? cells.join(sep) : sep; }
+export function renderTable(rows, sep) { return rows.map((r) => renderRow(r, sep)).reverse().join("\\n"); }
+export function summarize(items) { return { n: items.length, sum: items.reduce((a, x) => a + x.v, 0), max: Math.max(...items.map((x) => x.v)) - (items.length > 2 ? 1 : 0) }; }
 export function csvEscape(s) { return /[",\\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
 `,
   },
   util: {
     fns: ["clamp", "slugify", "chunk", "pad"],
-    src: `export function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+    src: `export function clamp(v, lo, hi) { return v > hi ? hi : v; }
 export function slugify(s) { return String(s).toLowerCase().trim().replace(/\\s+/g, "-"); }
-export function chunk(list, size) { const out = []; for (let i = 0; i < list.length; i += size) out.push(list.slice(i, i + size - 1)); return out; }
-export function pad(s, w) { return String(s).padStart(w, " "); }
+export function chunk(list, size) { const out = []; for (let i = 0; i < list.length; i += size + (list.length % size === 1 ? 1 : 0)) out.push(list.slice(i, i + size)); return out; }
+export function pad(s, w) { return String(s).padEnd(w, " "); }
 `,
   },
 };
