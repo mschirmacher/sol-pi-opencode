@@ -15,7 +15,7 @@ package (ADR-001).
 | P0 | Scaffold: dual entry, config loader, core interfaces | done |
 | P1 | ObservationPack v1 + pure-logic tests | done (v1.19.0 source spike resolved Q1–Q5, see docs/research/opencode-v1-internals.md) |
 | P2 | Action Fusion v1 + tests | done (code+tests); runtime E2E needs user env with real opencode + API key |
-| P3 | Online Context Compact v1 | not started |
+| P3 | Online Context Compact v1 | done (code+tests); runtime E2E needs real opencode + API key |
 | P4 | Evidence-Preserving Reducer v1 | not started |
 | P5 | v2 adapters for shipped mechanisms | not started |
 | P6 | Measurement / validation | not started |
@@ -44,6 +44,10 @@ Priority order: ObservationPack → Action Fusion → OCC → Reducer (rationale
   `client.session.summarize`; 1.x archives under XDG cache keyed by sessionID;
   1.x reducer one-shot call = throwaway session + hidden no-tools agent
   (P4 spike confirms).
+- P3 boundary signal: 1.x `todo.updated` events (built-in todo tool) are the
+  completed-step signal; `session.idle` is only the quiescent firing point.
+  LIMITATION: if the model never uses todos, OCC never fires (no fabricated
+  boundaries) — documented in src/v1/online-context-compact.ts.
 
 ## Invariants (non-negotiable)
 

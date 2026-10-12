@@ -24,10 +24,17 @@ export interface ReducerConfig extends FeatureConfig {
   model?: string;
 }
 
+export interface OnlineContextCompactConfig extends FeatureConfig {
+  windowReserveTokens: number;
+  cacheWriteReadRatio: number;
+  minRequestsBetween: number;
+  subsequentCompactionMargin: number;
+}
+
 export interface SolPiConfig {
   observationPack: ObservationPackConfig;
   actionFusion: ActionFusionConfig;
-  onlineContextCompact: FeatureConfig;
+  onlineContextCompact: OnlineContextCompactConfig;
   evidencePreservingReducer: ReducerConfig;
   cacheWriteReadRatio: number;
 }
@@ -40,7 +47,13 @@ export const DEFAULT_CONFIG: SolPiConfig = {
     excerptBytes: 1024,
   },
   actionFusion: { enabled: false, commandTimeoutMs: 60_000, allowList: [] },
-  onlineContextCompact: { enabled: false },
+  onlineContextCompact: {
+    enabled: false,
+    windowReserveTokens: 16_384,
+    cacheWriteReadRatio: 12.5,
+    minRequestsBetween: 2,
+    subsequentCompactionMargin: 1.5,
+  },
   evidencePreservingReducer: { enabled: false },
   cacheWriteReadRatio: 12.5,
 };
@@ -71,6 +84,10 @@ function cloneDefaults(): SolPiConfig {
 
 function positiveInt(value: unknown, fallback: number): number {
   return typeof value === "number" && Number.isInteger(value) && value > 0 ? value : fallback;
+}
+
+function positiveNumber(value: unknown, fallback: number): number {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : fallback;
 }
 
 function normalizeConfig(raw: unknown): SolPiConfig {
@@ -104,6 +121,27 @@ function normalizeConfig(raw: unknown): SolPiConfig {
     if (Array.isArray(f.allowList)) {
       out.actionFusion.allowList = f.allowList.filter((item): item is string => typeof item === "string");
     }
+  }
+
+  const occ = r.onlineContextCompact;
+  if (typeof occ === "object" && occ !== null) {
+    const o = occ as Record<string, unknown>;
+    out.onlineContextCompact.windowReserveTokens = positiveInt(
+      o.windowReserveTokens,
+      out.onlineContextCompact.windowReserveTokens,
+    );
+    out.onlineContextCompact.cacheWriteReadRatio = positiveNumber(
+      o.cacheWriteReadRatio,
+      out.onlineContextCompact.cacheWriteReadRatio,
+    );
+    out.onlineContextCompact.minRequestsBetween = positiveInt(
+      o.minRequestsBetween,
+      out.onlineContextCompact.minRequestsBetween,
+    );
+    out.onlineContextCompact.subsequentCompactionMargin = positiveNumber(
+      o.subsequentCompactionMargin,
+      out.onlineContextCompact.subsequentCompactionMargin,
+    );
   }
 
   const reducer = r.evidencePreservingReducer;

@@ -3,6 +3,7 @@ import type { Hooks, Plugin as V1Plugin, PluginInput, PluginOptions } from "@ope
 import { loadConfig } from "./core/config.js";
 import { createActionFusionHooks } from "./v1/action-fusion.js";
 import { createObservationPackHooks } from "./v1/observation-pack.js";
+import { createOnlineContextCompactHooks } from "./v1/online-context-compact.js";
 
 /** Compose two hook objects; shared hooks run in order (a before b). */
 function mergeHooks(a: Hooks, b: Hooks): Hooks {
@@ -34,6 +35,7 @@ export async function server(input: PluginInput, options?: PluginOptions): Promi
   const config = await loadConfig(input.directory);
   let hooks = createActionFusionHooks(input, config.actionFusion);
   hooks = mergeHooks(hooks, createObservationPackHooks(input, config.observationPack));
+  hooks = mergeHooks(hooks, createOnlineContextCompactHooks(input, config.onlineContextCompact));
   return hooks;
 }
 
