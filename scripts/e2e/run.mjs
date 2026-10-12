@@ -83,11 +83,11 @@ const SCENARIOS = {
       fallback: { content: "ok" },
     },
     assert: (ctx) => {
-      const first = ctx.bodies[0];
-      const editTool = toolNames(first).includes("edit") ? toolSchema(first, "edit") : undefined;
+      const first = ctx.bodies.find((b) => toolNames(b).includes("edit"));
+      const editTool = first ? toolSchema(first, "edit") : undefined;
       expect(editTool && JSON.stringify(editTool).includes("thenRun"), "thenRun missing from edit tool schema");
       expect(readFileSync(join(ctx.dir, "a.txt"), "utf8").includes("world"), "built-in edit not applied");
-      const fused = ctx.bodies.slice(1).find((b) => textOf(b).includes("[then_run:succeeded]"));
+      const fused = ctx.bodies.find((b) => textOf(b).includes("[then_run:succeeded]"));
       expect(fused, "no [then_run:succeeded] observation found");
       expect(textOf(fused).includes("FUSED_OK"), "then_run stdout missing from observation");
     },
