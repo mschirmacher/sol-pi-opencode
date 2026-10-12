@@ -1,0 +1,1124 @@
+{
+  "dbPath": "/home/agent/.local/share/opencode/opencode.db",
+  "offloadDir": "/home/agent/.local/share/opencode/tool-output",
+  "sessions": [
+    {
+      "id": "ses_ed395a6e1ffezLn66FF3B02V6Y",
+      "slug": "jolly-garden",
+      "title": "SoL-Pi to opencode 1.x/2.x",
+      "agent": "orchestrator",
+      "timeCreated": 1791746529566,
+      "timeCompacting": null,
+      "messages": 3,
+      "assistantTurns": 2,
+      "toolCalls": 3,
+      "actionFusion": {
+        "editParts": 0,
+        "adjacent": 0,
+        "sameTurn": 0,
+        "crossTurn": 0,
+        "adjacencyRate": 0,
+        "transitions": 1,
+        "eligibleTransitions": 0,
+        "eligibleTransitionRate": 0,
+        "bashShareOfNext": 0,
+        "runShareOfNext": 0,
+        "nextActions": {}
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [],
+        "replayBytes": 0,
+        "replayTokens": 0
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 199,
+        "output": 2883,
+        "reasoning": 0,
+        "cacheRead": 9201,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed39015c6ffeTtvRgo0MYlx6Mp",
+      "slug": "calm-cactus",
+      "title": "Research SoL-Pi repo (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791746894393,
+      "timeCompacting": null,
+      "messages": 2,
+      "assistantTurns": 1,
+      "toolCalls": 1,
+      "actionFusion": {
+        "editParts": 0,
+        "adjacent": 0,
+        "sameTurn": 0,
+        "crossTurn": 0,
+        "adjacencyRate": 0,
+        "transitions": 0,
+        "eligibleTransitions": 0,
+        "eligibleTransitionRate": 0,
+        "bashShareOfNext": 0,
+        "runShareOfNext": 0,
+        "nextActions": {}
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [],
+        "replayBytes": 0,
+        "replayTokens": 0
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed38fec0effeqVCsuxb52ze3iG",
+      "slug": "playful-eagle",
+      "title": "Research opencode 1.x/2.x APIs (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791746905073,
+      "timeCompacting": null,
+      "messages": 2,
+      "assistantTurns": 1,
+      "toolCalls": 3,
+      "actionFusion": {
+        "editParts": 0,
+        "adjacent": 0,
+        "sameTurn": 0,
+        "crossTurn": 0,
+        "adjacencyRate": 0,
+        "transitions": 0,
+        "eligibleTransitions": 0,
+        "eligibleTransitionRate": 0,
+        "bashShareOfNext": 0,
+        "runShareOfNext": 0,
+        "nextActions": {}
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [],
+        "replayBytes": 0,
+        "replayTokens": 0
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "reasoning": 0,
+        "cacheRead": 0,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed38dd84cffeeysNCrXAZRZiFM",
+      "slug": "jolly-cabin",
+      "title": "SoL-Pi concepts for opencode",
+      "agent": "orchestrator",
+      "timeCreated": 1791747041203,
+      "timeCompacting": null,
+      "messages": 26,
+      "assistantTurns": 22,
+      "toolCalls": 26,
+      "actionFusion": {
+        "editParts": 0,
+        "adjacent": 0,
+        "sameTurn": 0,
+        "crossTurn": 0,
+        "adjacencyRate": 0,
+        "transitions": 18,
+        "eligibleTransitions": 0,
+        "eligibleTransitionRate": 0,
+        "bashShareOfNext": 0,
+        "runShareOfNext": 0,
+        "nextActions": {}
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12c7d5f6a001v9ij2qwAlvVSFA",
+            "callID": "call_1f9a31839e124ab3a7242213",
+            "tool": "read",
+            "turn": 2,
+            "inlineBytes": 21471,
+            "offloadBytes": 0,
+            "sizeBytes": 21471,
+            "requestsAfterFirstAppearance": 19,
+            "replays": 17,
+            "replayableBytes": 365007,
+            "replayableTokens": 91252
+          },
+          {
+            "partId": "prt_12c7d62280014yBdtT5K2zsCiD",
+            "callID": "call_954ed6a4c1c0471eab91ee1a",
+            "tool": "read",
+            "turn": 2,
+            "inlineBytes": 19564,
+            "offloadBytes": 0,
+            "sizeBytes": 19564,
+            "requestsAfterFirstAppearance": 19,
+            "replays": 17,
+            "replayableBytes": 332588,
+            "replayableTokens": 83147
+          }
+        ],
+        "replayBytes": 697595,
+        "replayTokens": 174399
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 555758,
+        "output": 44393,
+        "reasoning": 0,
+        "cacheRead": 607374,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed38af342ffeNHInMXi15iQ6CZ",
+      "slug": "brave-pixel",
+      "title": "Research NVlabs SoL-Pi (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791747230910,
+      "timeCompacting": null,
+      "messages": 9,
+      "assistantTurns": 8,
+      "toolCalls": 18,
+      "actionFusion": {
+        "editParts": 3,
+        "adjacent": 1,
+        "sameTurn": 0,
+        "crossTurn": 1,
+        "adjacencyRate": 0.3333333333333333,
+        "transitions": 6,
+        "eligibleTransitions": 1,
+        "eligibleTransitionRate": 0.16666666666666666,
+        "bashShareOfNext": 0.3333333333333333,
+        "runShareOfNext": 0.3333333333333333,
+        "nextActions": {
+          "write": 2,
+          "bash": 1
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12c75538d001d2U2b3FisLg7yV",
+            "callID": "call_80b31106caef49cfa848da1e",
+            "tool": "webfetch",
+            "turn": 0,
+            "inlineBytes": 22851,
+            "offloadBytes": 0,
+            "sizeBytes": 22851,
+            "requestsAfterFirstAppearance": 7,
+            "replays": 5,
+            "replayableBytes": 114255,
+            "replayableTokens": 28564
+          },
+          {
+            "partId": "prt_12c758e3f001keT0blHwUlaUMF",
+            "callID": "call_8943d20009174a25b047546c",
+            "tool": "webfetch",
+            "turn": 1,
+            "inlineBytes": 48808,
+            "offloadBytes": 0,
+            "sizeBytes": 48808,
+            "requestsAfterFirstAppearance": 6,
+            "replays": 4,
+            "replayableBytes": 195232,
+            "replayableTokens": 48808
+          },
+          {
+            "partId": "prt_12c769892001sfab1t57c3JBjj",
+            "callID": "call_8b091bc5508e430aacde1a52",
+            "tool": "read",
+            "turn": 3,
+            "inlineBytes": 11469,
+            "offloadBytes": 0,
+            "sizeBytes": 11469,
+            "requestsAfterFirstAppearance": 4,
+            "replays": 2,
+            "replayableBytes": 22938,
+            "replayableTokens": 5735
+          }
+        ],
+        "replayBytes": 332425,
+        "replayTokens": 83107
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 239800,
+        "output": 10363,
+        "reasoning": 0,
+        "cacheRead": 85022,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed38ac58bffe8OZwV4I0r82350",
+      "slug": "gentle-star",
+      "title": "Research opencode 1.x/2.x APIs (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791747242612,
+      "timeCompacting": null,
+      "messages": 12,
+      "assistantTurns": 11,
+      "toolCalls": 19,
+      "actionFusion": {
+        "editParts": 1,
+        "adjacent": 0,
+        "sameTurn": 0,
+        "crossTurn": 0,
+        "adjacencyRate": 0,
+        "transitions": 9,
+        "eligibleTransitions": 0,
+        "eligibleTransitionRate": 0,
+        "bashShareOfNext": 0,
+        "runShareOfNext": 0,
+        "nextActions": {}
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12c7564810019qgy1VO7n4K6wG",
+            "callID": "call_3f4ac9334474447cada147b1",
+            "tool": "webfetch",
+            "turn": 0,
+            "inlineBytes": 13679,
+            "offloadBytes": 0,
+            "sizeBytes": 13679,
+            "requestsAfterFirstAppearance": 10,
+            "replays": 8,
+            "replayableBytes": 109432,
+            "replayableTokens": 27358
+          },
+          {
+            "partId": "prt_12c77a88a001A4lazuC2dx0Bcj",
+            "callID": "call_e0882c729b054a20959d11e4",
+            "tool": "read",
+            "turn": 4,
+            "inlineBytes": 10764,
+            "offloadBytes": 0,
+            "sizeBytes": 10764,
+            "requestsAfterFirstAppearance": 6,
+            "replays": 4,
+            "replayableBytes": 43056,
+            "replayableTokens": 10764
+          },
+          {
+            "partId": "prt_12c7948f4001N6Ylott70JC3zR",
+            "callID": "call_5de695194ee140ef8cb7688b",
+            "tool": "webfetch",
+            "turn": 5,
+            "inlineBytes": 51517,
+            "offloadBytes": 0,
+            "sizeBytes": 51517,
+            "requestsAfterFirstAppearance": 5,
+            "replays": 3,
+            "replayableBytes": 154551,
+            "replayableTokens": 38638
+          },
+          {
+            "partId": "prt_12c79f5df001ryLAXd2Yn0ds49",
+            "callID": "call_f295724d01514c608458cf51",
+            "tool": "webfetch",
+            "turn": 6,
+            "inlineBytes": 14822,
+            "offloadBytes": 0,
+            "sizeBytes": 14822,
+            "requestsAfterFirstAppearance": 4,
+            "replays": 2,
+            "replayableBytes": 29644,
+            "replayableTokens": 7411
+          },
+          {
+            "partId": "prt_12c7b248b001HlyzjXs1dcYUzg",
+            "callID": "call_4f1626875c664cc198baae0d",
+            "tool": "webfetch",
+            "turn": 8,
+            "inlineBytes": 24118,
+            "offloadBytes": 0,
+            "sizeBytes": 24118,
+            "requestsAfterFirstAppearance": 2,
+            "replays": 0,
+            "replayableBytes": 0,
+            "replayableTokens": 0
+          }
+        ],
+        "replayBytes": 336683,
+        "replayTokens": 84171
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 135069,
+        "output": 16370,
+        "reasoning": 0,
+        "cacheRead": 268625,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed3817034ffeKOh1c7Pb4kQGDX",
+      "slug": "curious-pixel",
+      "title": "Design transfer + ADR docs (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791747854283,
+      "timeCompacting": null,
+      "messages": 10,
+      "assistantTurns": 9,
+      "toolCalls": 12,
+      "actionFusion": {
+        "editParts": 4,
+        "adjacent": 1,
+        "sameTurn": 0,
+        "crossTurn": 1,
+        "adjacencyRate": 0.25,
+        "transitions": 7,
+        "eligibleTransitions": 1,
+        "eligibleTransitionRate": 0.14285714285714285,
+        "bashShareOfNext": 0.25,
+        "runShareOfNext": 0.25,
+        "nextActions": {
+          "write": 3,
+          "bash": 1
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12c7eaa03001h4LMLF0qLUmyDm",
+            "callID": "call_4f26bccfa2584d5d851187d4",
+            "tool": "read",
+            "turn": 0,
+            "inlineBytes": 21471,
+            "offloadBytes": 0,
+            "sizeBytes": 21471,
+            "requestsAfterFirstAppearance": 8,
+            "replays": 6,
+            "replayableBytes": 128826,
+            "replayableTokens": 32207
+          },
+          {
+            "partId": "prt_12c7eb849001czCfaJb2LaRmQ2",
+            "callID": "call_bdb72f60b3f046bfb2c8eb76",
+            "tool": "read",
+            "turn": 1,
+            "inlineBytes": 19564,
+            "offloadBytes": 0,
+            "sizeBytes": 19564,
+            "requestsAfterFirstAppearance": 7,
+            "replays": 5,
+            "replayableBytes": 97820,
+            "replayableTokens": 24455
+          }
+        ],
+        "replayBytes": 226646,
+        "replayTokens": 56662
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 29318,
+        "output": 12217,
+        "reasoning": 0,
+        "cacheRead": 245840,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed37d76f8ffeHNjFtKkRZJ33R0",
+      "slug": "swift-squid",
+      "title": "Implement P0+P1 scaffold+ObsPack (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791748114695,
+      "timeCompacting": null,
+      "messages": 22,
+      "assistantTurns": 21,
+      "toolCalls": 33,
+      "actionFusion": {
+        "editParts": 15,
+        "adjacent": 4,
+        "sameTurn": 1,
+        "crossTurn": 3,
+        "adjacencyRate": 0.26666666666666666,
+        "transitions": 19,
+        "eligibleTransitions": 3,
+        "eligibleTransitionRate": 0.15789473684210525,
+        "bashShareOfNext": 0.26666666666666666,
+        "runShareOfNext": 0.26666666666666666,
+        "nextActions": {
+          "write": 11,
+          "bash": 4
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12c82ec93001kV1xBdUCJ44Jv3",
+            "callID": "call_079821c711a644d38841f685",
+            "tool": "read",
+            "turn": 1,
+            "inlineBytes": 16557,
+            "offloadBytes": 0,
+            "sizeBytes": 16557,
+            "requestsAfterFirstAppearance": 19,
+            "replays": 17,
+            "replayableBytes": 281469,
+            "replayableTokens": 70367
+          },
+          {
+            "partId": "prt_12c8315a6001GDiwx7tLgEEUGT",
+            "callID": "call_649b2df7d8034556a2fbdb4a",
+            "tool": "read",
+            "turn": 2,
+            "inlineBytes": 10764,
+            "offloadBytes": 0,
+            "sizeBytes": 10764,
+            "requestsAfterFirstAppearance": 18,
+            "replays": 16,
+            "replayableBytes": 172224,
+            "replayableTokens": 43056
+          },
+          {
+            "partId": "prt_12c8317be001zm6QMIoHC3kkby",
+            "callID": "call_47e43143a6564669acc0b22e",
+            "tool": "read",
+            "turn": 2,
+            "inlineBytes": 10735,
+            "offloadBytes": 0,
+            "sizeBytes": 10735,
+            "requestsAfterFirstAppearance": 18,
+            "replays": 16,
+            "replayableBytes": 171760,
+            "replayableTokens": 42940
+          }
+        ],
+        "replayBytes": 625453,
+        "replayTokens": 156363
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 256181,
+        "output": 28244,
+        "reasoning": 0,
+        "cacheRead": 676784,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed37d496cffeIIsSaiLETYv16f",
+      "slug": "swift-eagle",
+      "title": "Spike opencode v1 internals (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791748126355,
+      "timeCompacting": null,
+      "messages": 12,
+      "assistantTurns": 11,
+      "toolCalls": 22,
+      "actionFusion": {
+        "editParts": 1,
+        "adjacent": 1,
+        "sameTurn": 0,
+        "crossTurn": 1,
+        "adjacencyRate": 1,
+        "transitions": 9,
+        "eligibleTransitions": 1,
+        "eligibleTransitionRate": 0.1111111111111111,
+        "bashShareOfNext": 1,
+        "runShareOfNext": 1,
+        "nextActions": {
+          "bash": 1
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [],
+        "replayBytes": 0,
+        "replayTokens": 0
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 152101,
+        "output": 10212,
+        "reasoning": 0,
+        "cacheRead": 133606,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed37236c6ffelwP6rUB7M7vepz",
+      "slug": "crisp-wizard",
+      "title": "Implement P2 Action Fusion (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791748852025,
+      "timeCompacting": null,
+      "messages": 45,
+      "assistantTurns": 44,
+      "toolCalls": 56,
+      "actionFusion": {
+        "editParts": 22,
+        "adjacent": 3,
+        "sameTurn": 0,
+        "crossTurn": 3,
+        "adjacencyRate": 0.13636363636363635,
+        "transitions": 42,
+        "eligibleTransitions": 3,
+        "eligibleTransitionRate": 0.07142857142857142,
+        "bashShareOfNext": 0.13636363636363635,
+        "runShareOfNext": 0.13636363636363635,
+        "nextActions": {
+          "edit": 12,
+          "write": 7,
+          "bash": 3
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12c8de795001TObZZbpRiuNO6s",
+            "callID": "call_8372a93101ac4338be29ecd8",
+            "tool": "read",
+            "turn": 1,
+            "inlineBytes": 16557,
+            "offloadBytes": 0,
+            "sizeBytes": 16557,
+            "requestsAfterFirstAppearance": 42,
+            "replays": 40,
+            "replayableBytes": 662280,
+            "replayableTokens": 165570
+          },
+          {
+            "partId": "prt_12c8de9b300138DFrCyp69zSZQ",
+            "callID": "call_b85f7545de5e4484a38fc068",
+            "tool": "read",
+            "turn": 1,
+            "inlineBytes": 10282,
+            "offloadBytes": 0,
+            "sizeBytes": 10282,
+            "requestsAfterFirstAppearance": 42,
+            "replays": 40,
+            "replayableBytes": 411280,
+            "replayableTokens": 102820
+          },
+          {
+            "partId": "prt_12c8f875c001NmwBKuVkSBKrEt",
+            "callID": "call_be4f3eb730284feab5c2f0c0",
+            "tool": "webfetch",
+            "turn": 17,
+            "inlineBytes": 13679,
+            "offloadBytes": 0,
+            "sizeBytes": 13679,
+            "requestsAfterFirstAppearance": 26,
+            "replays": 24,
+            "replayableBytes": 328296,
+            "replayableTokens": 82074
+          }
+        ],
+        "replayBytes": 1401856,
+        "replayTokens": 350464
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 50362,
+        "output": 31655,
+        "reasoning": 0,
+        "cacheRead": 2298454,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed159e189ffe8sjR2Jb8qHAGrQ",
+      "slug": "gentle-pixel",
+      "title": "Implement P3 OCC v1 (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791784001142,
+      "timeCompacting": null,
+      "messages": 38,
+      "assistantTurns": 37,
+      "toolCalls": 46,
+      "actionFusion": {
+        "editParts": 15,
+        "adjacent": 5,
+        "sameTurn": 0,
+        "crossTurn": 5,
+        "adjacencyRate": 0.3333333333333333,
+        "transitions": 35,
+        "eligibleTransitions": 5,
+        "eligibleTransitionRate": 0.14285714285714285,
+        "bashShareOfNext": 0.3333333333333333,
+        "runShareOfNext": 0.3333333333333333,
+        "nextActions": {
+          "edit": 7,
+          "bash": 5,
+          "write": 3
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12ea65e8a0014yqbN4Lge1ufO0",
+            "callID": "call_9de720b0a1d24a3bbbc916b3",
+            "tool": "read",
+            "turn": 3,
+            "inlineBytes": 10282,
+            "offloadBytes": 0,
+            "sizeBytes": 10282,
+            "requestsAfterFirstAppearance": 33,
+            "replays": 31,
+            "replayableBytes": 318742,
+            "replayableTokens": 79686
+          },
+          {
+            "partId": "prt_12ea66bf6001bZpyf52PuNEpx6",
+            "callID": "call_d1ba96de803d49ef9424d624",
+            "tool": "read",
+            "turn": 4,
+            "inlineBytes": 12117,
+            "offloadBytes": 0,
+            "sizeBytes": 12117,
+            "requestsAfterFirstAppearance": 32,
+            "replays": 30,
+            "replayableBytes": 363510,
+            "replayableTokens": 90878
+          }
+        ],
+        "replayBytes": 682252,
+        "replayTokens": 170564
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 41590,
+        "output": 23652,
+        "reasoning": 0,
+        "cacheRead": 1673727,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed15364edffeMPwzFYw4ODuYs3",
+      "slug": "tidy-engine",
+      "title": "Implement P4 Reducer v1 (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791784426258,
+      "timeCompacting": null,
+      "messages": 64,
+      "assistantTurns": 63,
+      "toolCalls": 97,
+      "actionFusion": {
+        "editParts": 28,
+        "adjacent": 6,
+        "sameTurn": 0,
+        "crossTurn": 6,
+        "adjacencyRate": 0.21428571428571427,
+        "transitions": 61,
+        "eligibleTransitions": 6,
+        "eligibleTransitionRate": 0.09836065573770492,
+        "bashShareOfNext": 0.21428571428571427,
+        "runShareOfNext": 0.21428571428571427,
+        "nextActions": {
+          "edit": 14,
+          "write": 8,
+          "bash": 6
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [],
+        "replayBytes": 0,
+        "replayTokens": 0
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 53844,
+        "output": 31829,
+        "reasoning": 0,
+        "cacheRead": 3640174,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed14a72efffeadd0526olK2LuI",
+      "slug": "jolly-mountain",
+      "title": "Implement P5 v2 adapters (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791785012496,
+      "timeCompacting": null,
+      "messages": 69,
+      "assistantTurns": 68,
+      "toolCalls": 86,
+      "actionFusion": {
+        "editParts": 29,
+        "adjacent": 9,
+        "sameTurn": 0,
+        "crossTurn": 9,
+        "adjacencyRate": 0.3103448275862069,
+        "transitions": 66,
+        "eligibleTransitions": 9,
+        "eligibleTransitionRate": 0.13636363636363635,
+        "bashShareOfNext": 0.3103448275862069,
+        "runShareOfNext": 0.3103448275862069,
+        "nextActions": {
+          "edit": 15,
+          "bash": 9,
+          "write": 5
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12eb5ba61001RsDHfZjjypztgS",
+            "callID": "call_3ccf5a0ff3c640bdbff986fe",
+            "tool": "bash",
+            "turn": 2,
+            "inlineBytes": 13883,
+            "offloadBytes": 0,
+            "sizeBytes": 13883,
+            "requestsAfterFirstAppearance": 65,
+            "replays": 63,
+            "replayableBytes": 874629,
+            "replayableTokens": 218657
+          },
+          {
+            "partId": "prt_12eb61cfb001DcWx2sVM1ouHHX",
+            "callID": "call_6cb2fa8f3bf94c2aba94751d",
+            "tool": "bash",
+            "turn": 9,
+            "inlineBytes": 11459,
+            "offloadBytes": 0,
+            "sizeBytes": 11459,
+            "requestsAfterFirstAppearance": 58,
+            "replays": 56,
+            "replayableBytes": 641704,
+            "replayableTokens": 160426
+          },
+          {
+            "partId": "prt_12eb667fc001nB8Q6eslw0TRrB",
+            "callID": "call_a2d0375f1ded45f687833f3b",
+            "tool": "read",
+            "turn": 14,
+            "inlineBytes": 11575,
+            "offloadBytes": 0,
+            "sizeBytes": 11575,
+            "requestsAfterFirstAppearance": 53,
+            "replays": 51,
+            "replayableBytes": 590325,
+            "replayableTokens": 147581
+          },
+          {
+            "partId": "prt_12eb66a40001225boIgy4DBbzC",
+            "callID": "call_320f8374393c4df4974cc022",
+            "tool": "read",
+            "turn": 14,
+            "inlineBytes": 13453,
+            "offloadBytes": 0,
+            "sizeBytes": 13453,
+            "requestsAfterFirstAppearance": 53,
+            "replays": 51,
+            "replayableBytes": 686103,
+            "replayableTokens": 171526
+          },
+          {
+            "partId": "prt_12eb6ed79001gsCqT64yYgiaLe",
+            "callID": "call_ed81f3af89e64a98ba956eb5",
+            "tool": "bash",
+            "turn": 18,
+            "inlineBytes": 10971,
+            "offloadBytes": 0,
+            "sizeBytes": 10971,
+            "requestsAfterFirstAppearance": 49,
+            "replays": 47,
+            "replayableBytes": 515637,
+            "replayableTokens": 128909
+          }
+        ],
+        "replayBytes": 3308398,
+        "replayTokens": 827099
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 63994,
+        "output": 48119,
+        "reasoning": 0,
+        "cacheRead": 5078476,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed12c04b1ffeEyQWXjzhvUSiwl",
+      "slug": "hidden-star",
+      "title": "Spike P6 environment (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791787006798,
+      "timeCompacting": null,
+      "messages": 24,
+      "assistantTurns": 23,
+      "toolCalls": 26,
+      "actionFusion": {
+        "editParts": 1,
+        "adjacent": 1,
+        "sameTurn": 0,
+        "crossTurn": 1,
+        "adjacencyRate": 1,
+        "transitions": 21,
+        "eligibleTransitions": 1,
+        "eligibleTransitionRate": 0.047619047619047616,
+        "bashShareOfNext": 1,
+        "runShareOfNext": 1,
+        "nextActions": {
+          "bash": 1
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [],
+        "replayBytes": 0,
+        "replayTokens": 0
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 22121,
+        "output": 10628,
+        "reasoning": 0,
+        "cacheRead": 476654,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed10c6701ffehJxQvmkNYUszSf",
+      "slug": "clever-planet",
+      "title": "P6a session miner (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791789078782,
+      "timeCompacting": null,
+      "messages": 12,
+      "assistantTurns": 11,
+      "toolCalls": 15,
+      "actionFusion": {
+        "editParts": 6,
+        "adjacent": 2,
+        "sameTurn": 0,
+        "crossTurn": 2,
+        "adjacencyRate": 0.3333333333333333,
+        "transitions": 10,
+        "eligibleTransitions": 2,
+        "eligibleTransitionRate": 0.2,
+        "bashShareOfNext": 0.3333333333333333,
+        "runShareOfNext": 0.3333333333333333,
+        "nextActions": {
+          "edit": 3,
+          "bash": 2,
+          "write": 1
+        }
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [],
+        "replayBytes": 0,
+        "replayTokens": 0
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 124749,
+        "output": 12517,
+        "reasoning": 0,
+        "cacheRead": 109314,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    },
+    {
+      "id": "ses_ed10c203affeqaRTLqgpOj9oX7",
+      "slug": "gentle-forest",
+      "title": "P6b mock E2E harness (@general subagent)",
+      "agent": "general",
+      "timeCreated": 1791789096901,
+      "timeCompacting": null,
+      "messages": 12,
+      "assistantTurns": 11,
+      "toolCalls": 20,
+      "actionFusion": {
+        "editParts": 0,
+        "adjacent": 0,
+        "sameTurn": 0,
+        "crossTurn": 0,
+        "adjacencyRate": 0,
+        "transitions": 9,
+        "eligibleTransitions": 0,
+        "eligibleTransitionRate": 0,
+        "bashShareOfNext": 0,
+        "runShareOfNext": 0,
+        "nextActions": {}
+      },
+      "observationPack": {
+        "thresholdBytes": 10240,
+        "largeOutputs": [
+          {
+            "partId": "prt_12ef459f9001f4nsWHieyT2dE7",
+            "callID": "call_70193d09aec54c5793e72f34",
+            "tool": "read",
+            "turn": 2,
+            "inlineBytes": 19564,
+            "offloadBytes": 0,
+            "sizeBytes": 19564,
+            "requestsAfterFirstAppearance": 8,
+            "replays": 6,
+            "replayableBytes": 117384,
+            "replayableTokens": 29346
+          },
+          {
+            "partId": "prt_12ef60303001NPx4IctbNseFJV",
+            "callID": "call_6643344bfafb431a98ac399c",
+            "tool": "read",
+            "turn": 4,
+            "inlineBytes": 13453,
+            "offloadBytes": 0,
+            "sizeBytes": 13453,
+            "requestsAfterFirstAppearance": 6,
+            "replays": 4,
+            "replayableBytes": 53812,
+            "replayableTokens": 13453
+          },
+          {
+            "partId": "prt_12ef640f0001GE6Lx2R6kecsTl",
+            "callID": "call_5d5d1ca8901c4ace8927fed5",
+            "tool": "read",
+            "turn": 5,
+            "inlineBytes": 11575,
+            "offloadBytes": 0,
+            "sizeBytes": 11575,
+            "requestsAfterFirstAppearance": 5,
+            "replays": 3,
+            "replayableBytes": 34725,
+            "replayableTokens": 8681
+          }
+        ],
+        "replayBytes": 205921,
+        "replayTokens": 51480
+      },
+      "occ": {
+        "compactionParts": 0,
+        "timeCompacting": null,
+        "note": "no compaction observed"
+      },
+      "tokens": {
+        "input": 174756,
+        "output": 3004,
+        "reasoning": 0,
+        "cacheRead": 121460,
+        "cacheWrite": 0
+      },
+      "cost": 0
+    }
+  ],
+  "aggregate": {
+    "sessions": 16,
+    "messages": 362,
+    "toolCalls": 483,
+    "editParts": 125,
+    "adjacent": 33,
+    "adjacencyRate": 0.264,
+    "transitions": 313,
+    "eligibleTransitions": 32,
+    "eligibleTransitionRate": 0.10223642172523961,
+    "largeOutputs": 28,
+    "replayBytes": 7817229,
+    "replayTokens": 1954309,
+    "compactionParts": 0,
+    "sessionsWithCompaction": 0,
+    "tokens": {
+      "input": 1899842,
+      "output": 286086,
+      "reasoning": 0,
+      "cacheRead": 15424711,
+      "cacheWrite": 0
+    },
+    "cost": 0
+  }
+}

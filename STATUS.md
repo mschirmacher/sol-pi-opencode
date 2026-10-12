@@ -17,18 +17,20 @@ opencode plugin porting SoL-Pi's 4 token-efficiency mechanisms; 1.x priority,
 | P3 | Online Context Compact v1 | done (code+tests); runtime E2E needs real opencode + API key |
 | P4 | Evidence-Preserving Reducer v1 | done (code+tests); runtime E2E needs real opencode + API key |
 | P5 | v2 adapters for shipped mechanisms | done (code+tests, @opencode/plugin 2.0.26 types; runtime E2E needs real opencode 2.x) |
-| P6 | Measurement / validation | not started |
+| P6 | Measurement / validation | in_progress (miner + baseline done; E2E + A/B pending) |
 
 ## Key facts
 
-- SoL-Pi mechanisms/constants/numbers: `docs/research/sol-pi.md` (10 KiB
-  threshold, 2 full sends, sha256 guard, cacheWriteReadRatio 12.5,
-  ObservationPack A/B −23.58% bill).
+- SoL-Pi mechanisms/constants/numbers: `docs/research/sol-pi.md` (10 KiB threshold,
+  2 full sends, sha256 guard, cacheWriteReadRatio 12.5, ObservationPack −23.58% bill).
+- P6 baseline (`scripts/measure.mjs`, 16 orchestration sessions, cost=0 → tokens
+  only): adjacency 26.4% of edit parts / 10.2% of cross-turn transitions, bash
+  26.6% of next-actions; ObservationPack replay ≈1.95M tok (11.1% of billed); OCC
+  compaction 0. Numbers + caveats: `docs/plan/measurement-report.md`.
 - 1.x/2.x hook surface + breaking changes + dual-entry:
-  `docs/research/opencode-extensions.md` (V1 object entrypoint needs
-  opencode-ai ≥ 1.18.29). Repo decision: `docs/plan/adr-001-repo-structure.md`;
-  per-mechanism mapping + questions (a)–(d): `docs/plan/mapping.md`;
-  phases + done-criteria: `docs/plan/roadmap.md`.
+  `docs/research/opencode-extensions.md` (V1 object entrypoint needs opencode-ai
+  ≥ 1.18.29). Repo decision: `docs/plan/adr-001-repo-structure.md`; per-mechanism
+  mapping + questions (a)–(d): `docs/plan/mapping.md`; phases: `docs/plan/roadmap.md`.
 - P2 verified against v1.19.0 source: built-in arg decode strips excess keys;
   after-hook output rewrite reaches model AND storage. Addendum: mapping.md.
 - P3 boundary signal: 1.x `todo.updated` events (built-in todo tool) are the
@@ -50,9 +52,8 @@ opencode plugin porting SoL-Pi's 4 token-efficiency mechanisms; 1.x priority,
   `session.create` → `session.prompt({agent, model, parts})` blocks and returns
   the last assistant WithParts → `session.delete`. Hidden no-tools agent
   `sol-pi-reducer` registered on the live config object via the `config` hook.
-  Gaps: no server-side prompt timeout (bounded client-side); missing
-  agent/model → fail-open. Receipt marker `sol_pi_evidence_receipt_v1` is
-  already excluded by ObservationPack.
+  Gaps: no server-side prompt timeout (bounded client-side); missing agent/model →
+  fail-open. Receipt marker `sol_pi_evidence_receipt_v1` already excluded by ObservationPack.
 
 ## Invariants (non-negotiable)
 
