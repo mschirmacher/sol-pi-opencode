@@ -212,3 +212,94 @@ sessions, repeated ≥10 KiB outputs, edit→test loops), not a default-on flip.
    attribution value.
 5. No per-mechanism firing counters captured per run (only DB-derived
    replayTokens=0); attribution relies on config diff between arms.
+
+## A/B v2 — long sessions (PARTIAL: 10/18 runs, stopped by user)
+
+Matrix (`scripts/ab/matrix.sh` → `run-arm.mjs --tasks-dir tasks-long`): 3 tasks
+(L1 fix-12-tests, L2 build-log forensics, L3 refactor-keep-green) × 3 arms
+(off/on/op-only) × 2 repeats. **Stopped by user at 10/18**; leftover driver
+(matrix.sh + on-L3-r1 run) killed 2026-10-12. Completed: off-L1/L2/L3 ×r1,r2 +
+on-L1/L2 ×r1,r2. Missing: on-L3 ×r1,r2, op-only L1/L2/L3 ×r1,r2.
+Results: `docs/plan/ab-results-long/`.
+
+### Headline: the matrix is INVALID as a token measurement
+
+1. **All 10 runs hit the 900 s wall-clock timeout** (`opencodeExit=-1`,
+   `timedOut=true`, durationMs 901–1020 s). No run finished its task.
+2. **Session-DB capture failed for 8/10 runs.** Only off-L1-r1/r2 have real
+   session data (221 MB / 142 MB DBs). All four on-arm DBs and off-L2/L3 DBs
+   are empty or degenerate (0 sessions; on-arm `opencode.log` is 0 bytes).
+   → **paired token deltas for L1 and L2 are NOT computable**; no on-arm
+   in/cacheRead/output split, turns, or tool-call counts exist. Not invented here.
+3. **Firing counters are zero in every run** (collect.mjs counters):
+   obsArchiveFiles 0, obsPlaceholderParts 0, reducerJournalEntries 0,
+   occStateFiles 0, occTransitions 0, fusionTags 0. On-arm `.cache/opencode/`
+   contains no `sol-pi` artifact dir at all (no obs_*.txt, no reducer journal,
+   no OCC state).
+
+### What data does exist
+
+| run | exit | score (partial) | tokTotal | in | cacheRead | out | turns | tools | replayTok | adj |
+|---|---|---|---|---|---|---|---|---|---|---|
+| off-L1-r1 | −1 (TO) | 0 (43/48) | 1,811,448 | 745,397 | 1,060,207 | 5,844 | 22 | 28 | 1,137,840 | 7 (1.00) |
+| off-L1-r2 | −1 (TO) | 0 (—) | 1,416,575 | 282,966 | 1,126,471 | 7,138 | 19 | 24 | 841,926 | 4 (0.67) |
+| off-L2-r1/r2 | −1 (TO) | 0/3 | no data (empty DB) | | | | | | | |
+| off-L3-r1 | −1 (TO) | 1/3 (16/16 pass) | ~0 (degenerate DB: 1 session) | | | | | | | |
+| off-L3-r2 | −1 (TO) | 1/3 | no data (empty DB) | | | | | | | |
+| on-L1-r1/r2 | −1 (TO) | 0 (36/48) | no data (empty DB, 0-byte log) | | | | | | | |
+| on-L2-r1/r2 | −1 (TO) | 0/3 | no data (empty DB) | | | | | | | |
+
+L3 off-arm baseline (requested): **unavailable** — both off-L3 DBs are
+empty/degenerate (replayTokens 0, adjacency n/a). The only real long-session
+baselines remain off-L1: replayTokens 1.14 M / 0.84 M, adjacency 7/7 and 4/6 —
+i.e. the ObservationPack firing opportunity DID exist in the off arm
+(≥840 k replay tokens), but whether the on arm consumed it is unknowable
+from these runs.
+
+### Firing verdict per mechanism (long sessions)
+
+- ObservationPack: **no positive firing evidence** — 0 archive files, 0
+  placeholder parts in both on-L1 runs despite ≥840 k replay-token opportunity
+  (off-arm measure). Not disproven: capture is broken, so absence ≠ non-firing.
+- Reducer: 0 journal entries — no evidence it fired.
+- OCC: 0 state files / 0 transitions — consistent with P6c (window never
+  reached; sessions here also never hit compaction).
+- Action Fusion: 0 tags — but DB-derived, vacuous on empty DBs.
+
+### Revised per-mechanism GO/NO-GO
+
+Unchanged from P6c: **all four NO-GO for default-on.** P6d was meant to give
+ObservationPack its long-session test; it produced zero usable on-arm data, so
+the P6c NO-GO stands un-amended. The honest finding is a **harness failure**,
+not a mechanism result: on the on-arm, opencode left an empty DB and a 0-byte
+log under the sandboxed XDG dirs (plugin shim + sol-pi.json were present in
+`.opencode/`), and every run timed out at 900 s.
+
+### What the missing 8 runs would / would not change
+
+Re-running on-L3 + op-only as-is would **not** change any verdict: the same
+capture failure would likely reproduce (empty DBs), and the 900 s timeout
+already truncated every completed run. They would only add value after the
+harness is fixed: (a) raise the timeout or shrink task scope so runs finish,
+(b) diagnose why on-arm sessions don't land in `.ab/<arm>/<run>/.data/.../opencode.db`
+(check plugin crash / XDG env propagation), (c) verify sol-pi artifact dir appears.
+
+### Resume commands (after harness fix)
+
+```
+node scripts/ab/run-arm.mjs --arm on      --task L3 --tasks-dir tasks-long --run 1
+node scripts/ab/run-arm.mjs --arm on      --task L3 --tasks-dir tasks-long --run 2
+node scripts/ab/run-arm.mjs --arm op-only --task L1 --tasks-dir tasks-long --run 1
+node scripts/ab/run-arm.mjs --arm op-only --task L1 --tasks-dir tasks-long --run 2
+node scripts/ab/run-arm.mjs --arm op-only --task L2 --tasks-dir tasks-long --run 1
+node scripts/ab/run-arm.mjs --arm op-only --task L2 --tasks-dir tasks-long --run 2
+node scripts/ab/run-arm.mjs --arm op-only --task L3 --tasks-dir tasks-long --run 1
+node scripts/ab/run-arm.mjs --arm op-only --task L3 --tasks-dir tasks-long --run 2
+node scripts/ab/collect.mjs off on op-only --tasks L1,L2,L3 --run 1
+node scripts/ab/collect.mjs off on op-only --tasks L1,L2,L3 --run 2
+```
+
+### Statistical statement
+
+n=2 per cell, 2 paired tasks at best — direction-finding only, no significance.
+With 8/10 DBs empty, even direction is not established for any token metric.

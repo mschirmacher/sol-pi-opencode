@@ -18,7 +18,7 @@ opencode plugin porting SoL-Pi's 4 token-efficiency mechanisms; 1.x priority,
 | P4 | Evidence-Preserving Reducer v1 | done (code+tests); runtime E2E needs real opencode + API key |
 | P5 | v2 adapters for shipped mechanisms | done (code+tests, @opencode/plugin 2.0.26 types; runtime E2E needs real opencode 2.x) |
 | P6 | Measurement / validation | done (baseline + E2E 4/4 PASS + A/B: 10 paired + 3 op-only runs, cost-0 proxy; all mechanisms stay default-off) |
-| P6d | Long-session A/B suite (tasks-long + firing counters) | built+validated / matrix pending |
+| P6d | Long-session A/B suite (tasks-long + firing counters) | partial (10/18 runs; driver stopped; evaluation in report) |
 
 ## Key facts
 

@@ -14,5 +14,18 @@
   "runOut": "",
   "runErr": "",
   "db": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/L1-r1/.data/opencode/opencode.db",
-  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/L1-r1/.cache"
+  "cacheDir": "/home/thana/_private-projekte/sol-pi-opencode/.ab/on/L1-r1/.cache",
+  "counters": {
+    "obsArchiveFiles": 0,
+    "obsPlaceholderParts": 0,
+    "reducerJournalEntries": 0,
+    "occStateFiles": 0,
+    "occTransitions": 0,
+    "fusionTags": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 0
+    },
+    "fusionTagsTotal": 0
+  }
 }
